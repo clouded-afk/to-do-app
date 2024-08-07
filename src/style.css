@@ -1,6 +1,9 @@
 :root {
     --shadow-color: #a8a29e;
     --accent-color: #14532d;
+    --input-color: #cbd5e1;
+    --submit-color: #15803d;
+    --close-color: #f87171;
 }
 
 * {
@@ -92,6 +95,7 @@ li {
 .new-list-button {
     background-color: var(--accent-color);
     color: white;
+    font-size: 16px;
     font-weight: bold;
     width: 70%;
     height: 30px;
@@ -120,6 +124,7 @@ li {
 .new-task-button {
     background-color: var(--accent-color);
     color: white;
+    font-size: 16px;
     font-weight: bold;
     height: 30px;
     width: 150px;
@@ -131,6 +136,135 @@ li {
 
 .fa-plus {
     margin-left: 5px;
+}
+
+.form-header {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.list-dialog {
+    display: none;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    height: 300px;
+    width: 300px;
+    margin: auto;
+    margin-top: 300px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 2px 2px 2px 2px var(--shadow-color);
+}
+
+.list-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#list-name-input {
+    background-color: var(--input-color);
+    height: 30px;
+    width: 90%;
+    margin: 15px;
+    margin-top: 0;
+    margin-bottom: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+#list-submit, .list-close, #task-submit, .task-close {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    width: 50%;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#list-submit, #task-submit {
+    background-color: var(--submit-color);
+    margin: auto;
+}
+
+.list-close, .task-close {
+    background-color: var(--close-color);
+}
+
+#task-submit {
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+label {
+    margin-left: 20px;
+}
+
+.task-dialog {
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    width: 600px;
+    height: 500px;
+    margin: auto;
+    margin-top: 250px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 2px 2px 2px 2px var(--shadow-color);
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.task-label {
+    margin-left: 90px;
+}
+
+#task-name-input {
+    background-color: var(--input-color);
+    width: 70%;
+    height: 30px;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+#task-description-input {
+    background-color: var(--input-color);
+    resize: none;
+    width: 70%;
+    height: 100px;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+#task-due-date, #task-priority{
+    width: 70%;
+    margin: auto;
+}
+
+#task-due-date {
+    margin-bottom: 10px;
+}
+
+#tas-priority {
+    margin-bottom: 20px;
 }
 
 footer {

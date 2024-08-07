@@ -58,6 +58,7 @@
         </div>
 
         <dialog class="list-dialog">
+            <div class="form-header">Add New List</div>
             <form class="list-form">
 
                 <label for="list-name-input">List Name:</label>
@@ -66,32 +67,33 @@
                 <button type="submit" id="list-submit">Submit</button>
 
             </form>
-            <button class="list-dialog-close">Close</button>
+            <button class="list-close">Close</button>
         </dialog>
     
         <dialog class="task-dialog">
+            <div class="form-header">Add New Task</div>
             <form class="task-form">
 
-                <label for="task-name-input">Task Name:</label>
+                <label for="task-name-input" class="task-label">Task Name:</label>
                 <input type="text" id="task-name-input" name="task-name-input">
     
-                <label for="task-description-input">Description:</label>
+                <label for="task-description-input" class="task-label">Description:</label>
                 <textarea id="task-description-input" name="task-description-input"></textarea>
     
-                <label for="task-due-date">Due Date:</label>
+                <label for="task-due-date" class="task-label">Due Date:</label>
                 <input type="date" id="task-due-date" name="task-due-date">
     
-                <label for="task-priority">Priority:</label>
+                <label for="task-priority" class="task-label">Priority:</label>
                 <select id="task-priority" name="task-priority">
-                    <option value="low">low</option>
-                    <option value="medium">medium</option>
-                    <option value="high">high</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
                 </select>
 
                 <button type="submit" id="task-submit">Submit</button>
 
             </form>
-            <button class="task-dialog-close">Close</button>
+            <button class="task-close">Close</button>
         </dialog>
 
     </div>

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Saira:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e4a002d04e.js" crossorigin="anonymous"></script>
     <title>On the Docket</title>
 </head>
@@ -14,38 +17,88 @@
     <div class="main-container">
         <div class="sidebar">
 
-            <h2>My Tasks</h2>
+            <div class="my-tasks-header">
+                <h2>My Tasks</h2>
+                <div class="line-divider"></div>
+            </div>
                 <ul class="my-tasks">
                     <li><button class="my-task-button">All Tasks</button></li>
                     <li><button class="my-task-button">Today</button></li>
                     <li><button class="my-task-button">This Week</button></li>
                 </ul>
-
-            <h2>My Lists</h2>
+            
+            <div class="my-lists-header">
+                <h2>My Lists</h2>
+                <div class="line-divider"></div>
+            </div>
                 <ul class="my-lists">
                 
                 </ul>
 
-            <button class="new-list-button">New List<i class="fa-solid fa-plus"></i></button>
+            <div class="new-list-button-container">
+                <button class="new-list-button">New List<i class="fa-solid fa-plus"></i></button>
+            </div>   
 
         </div>
 
         <div class="content-container">
 
-            <div class="content-header">
-                <h2 class="content-header-text">All Tasks</h2>
-                <button class="new-task-button">New Task<i class="fa-solid fa-plus"></i></button>
+            <div class="content-header-container">
+                <div class="content-header">
+                    <h2 class="content-header-text">All Tasks</h2>
+                    <button class="new-task-button">New Task<i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="line-divider"></div>
             </div>
-
+            
             <div class="content">
 
             </div>
 
         </div>
+
+        <dialog class="list-dialog">
+            <form class="list-form">
+
+                <label for="list-name-input">List Name:</label>
+                <input type="text" id="list-name-input" name="list-name-input">
+
+                <button type="submit" id="list-submit">Submit</button>
+
+            </form>
+            <button class="list-dialog-close">Close</button>
+        </dialog>
+    
+        <dialog class="task-dialog">
+            <form class="task-form">
+
+                <label for="task-name-input">Task Name:</label>
+                <input type="text" id="task-name-input" name="task-name-input">
+    
+                <label for="task-description-input">Description:</label>
+                <textarea id="task-description-input" name="task-description-input"></textarea>
+    
+                <label for="task-due-date">Due Date:</label>
+                <input type="date" id="task-due-date" name="task-due-date">
+    
+                <label for="task-priority">Priority:</label>
+                <select id="task-priority" name="task-priority">
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                </select>
+
+                <button type="submit" id="task-submit">Submit</button>
+
+            </form>
+            <button class="task-dialog-close">Close</button>
+        </dialog>
+
     </div>
 
     <footer>
         <div class="footer-text">Coded by: <a class="footer-link" href="https://github.com/clouded-afk">clouded-afk<i class="fab fa-github"></i><a></div>
     </footer>
+
 </body>
 </html>

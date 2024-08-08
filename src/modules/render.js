@@ -47,6 +47,7 @@ function addEventHandlers() {
     taskSubmit.addEventListener("click", (e) => {
         e.preventDefault()
         taskDialog.style.display = "none"
+        addNewTask();
         buttonDisabler(false)
     })
 
@@ -64,6 +65,19 @@ function addEventHandlers() {
             headerText.textContent = button.textContent
             newTaskButton.style.display = "none"
         })
+    })
+}
+
+function buttonDisabler(disable) {
+    const myListButton = document.querySelectorAll(".my-list-button")
+    const myTaskButton = document.querySelectorAll(".my-task-button")
+
+    myListButton.forEach((button) => {
+        button.disabled = disable
+    })
+
+    myTaskButton.forEach((button) => {
+        button.disabled = disable
     })
 }
 
@@ -91,22 +105,23 @@ function addNewList() {
             newTaskButton.style.display = "block"
         })
     })
-
-    console.log(toDo.getLists())
 }
 
-function buttonDisabler(disable) {
-    const myListButton = document.querySelectorAll(".my-list-button")
-    const myTaskButton = document.querySelectorAll(".my-task-button")
+function addNewTask() {
+    const taskName = document.getElementById("task-name-input")
+    const taskDescription = document.getElementById("task-description-input")
+    const taskDueDate = document.getElementById("task-due-date")
+    const taskPriority =  document.getElementById("task-priority")
 
-    myListButton.forEach((button) => {
-        button.disabled = disable
-    })
+    const newTask = new Task(taskName.value, taskDescription.value, taskDueDate.value, taskPriority.value)
 
-    myTaskButton.forEach((button) => {
-        button.disabled = disable
-    })
+    const headerText = document.querySelector(".content-header-text")
+
+    const currentList = toDo.getList(headerText.textContent)
+    currentList.addTask(newTask)
 }
+
+
 
 function initialLoad() {
     addEventHandlers()

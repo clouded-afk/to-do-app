@@ -4,6 +4,7 @@
     --input-color: #cbd5e1;
     --submit-color: #15803d;
     --close-color: #f87171;
+    --active-button: #d4d4d4;
 }
 
 * {
@@ -74,13 +75,18 @@ li {
     text-align: left;
     width: 70%;
     height: 40px;
-    padding-left: 10px;
+    padding-left: 15px;
+    margin-bottom: 10px;
     color: var(--accent-color);
     font-weight: bold;
     font-size: 20px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
+}
+
+.active {
+    background-color: var(--active-button);
 }
 
 .new-list-button-container {

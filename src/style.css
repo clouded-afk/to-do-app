@@ -122,6 +122,7 @@ li {
 }
 
 .new-task-button {
+    display: none;
     background-color: var(--accent-color);
     color: white;
     font-size: 16px;

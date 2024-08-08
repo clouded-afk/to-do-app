@@ -64,10 +64,13 @@ function addEventHandlers() {
         button.addEventListener("click", () => {
             headerText.textContent = button.textContent
             newTaskButton.style.display = "none"
+            removeActiveClass()
+            button.classList.add("active")
         })
     })
 }
 
+// disables other buttons while a dialog is open
 function buttonDisabler(disable) {
     const myListButton = document.querySelectorAll(".my-list-button")
     const myTaskButton = document.querySelectorAll(".my-task-button")
@@ -81,6 +84,7 @@ function buttonDisabler(disable) {
     })
 }
 
+// adds list button to the page and pushes that list into the lists array of the ToDoList object
 function addNewList() {
     const myListSection = document.querySelector(".my-lists")
     const listName = document.getElementById("list-name-input")
@@ -103,10 +107,13 @@ function addNewList() {
         button.addEventListener("click", () => {
             headerText.textContent = button.textContent
             newTaskButton.style.display = "block"
+            removeActiveClass()
+            button.classList.add("active")
         })
     })
 }
 
+// Add task to the tasks array of the current list object selected
 function addNewTask() {
     const taskName = document.getElementById("task-name-input")
     const taskDescription = document.getElementById("task-description-input")
@@ -119,6 +126,20 @@ function addNewTask() {
 
     const currentList = toDo.getList(headerText.textContent)
     currentList.addTask(newTask)
+}
+
+//remove active class when from buttons when a different button is clicked
+function removeActiveClass() {
+    const myTaskButton = document.querySelectorAll(".my-task-button")
+    const myListButton = document.querySelectorAll(".my-list-button")
+
+    myTaskButton.forEach((button) => {
+        button.classList.remove("active")
+    })
+
+    myListButton.forEach((button) => {
+        button.classList.remove("active")
+    })
 }
 
 

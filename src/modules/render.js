@@ -29,6 +29,7 @@ function addEventHandlers() {
     listSubmit.addEventListener("click", (e) => {
         e.preventDefault()
         listDialog.style.display = "none"
+        addNewList();
     })
 
     listClose.addEventListener("click", () => {
@@ -47,6 +48,45 @@ function addEventHandlers() {
     taskClose.addEventListener("click", () => {
         taskDialog.style.display = "none"
     })
+
+    //for my task buttons 
+    const headerText = document.querySelector(".content-header-text")
+    const myTaskButton = document.querySelectorAll(".my-task-button")
+
+    myTaskButton.forEach((button) => {
+        button.addEventListener("click", () => {
+            headerText.textContent = button.textContent
+            newTaskButton.style.display = "none"
+        })
+    })
+}
+
+function addNewList() {
+    const myListSection = document.querySelector(".my-lists")
+    const listName = document.getElementById("list-name-input")
+    
+    const listElement = document.createElement("li")
+    const listButton = document.createElement("button")
+
+    listButton.classList.add("my-list-button")
+    listButton.textContent = listName.value
+
+    toDo.addList(new List(listName.value))
+    listElement.appendChild(listButton)
+    myListSection.appendChild(listElement)
+
+    const headerText = document.querySelector(".content-header-text")
+    const myListButton = document.querySelectorAll(".my-list-button")
+    const newTaskButton = document.querySelector(".new-task-button")
+    
+    myListButton.forEach((button) => {
+        button.addEventListener("click", () => {
+            headerText.textContent = button.textContent
+            newTaskButton.style.display = "block"
+        })
+    })
+
+    console.log(toDo.getLists())
 }
 
 function initialLoad() {

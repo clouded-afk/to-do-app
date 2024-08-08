@@ -15,11 +15,13 @@ function addEventHandlers() {
     newListButton.addEventListener("click", () => {
         listDialog.style.display = "flex"
         taskDialog.style.display = "none"
+        buttonDisabler(true)
     })
 
     newTaskButton.addEventListener("click", () => {
         taskDialog.style.display = "flex"
         listDialog.style.display = "none"
+        buttonDisabler(true)
     })
 
     // for list form buttons
@@ -30,10 +32,12 @@ function addEventHandlers() {
         e.preventDefault()
         listDialog.style.display = "none"
         addNewList();
+        buttonDisabler(false)
     })
 
     listClose.addEventListener("click", () => {
         listDialog.style.display = "none"
+        buttonDisabler(false)
     })
 
     // for task form buttons
@@ -43,10 +47,12 @@ function addEventHandlers() {
     taskSubmit.addEventListener("click", (e) => {
         e.preventDefault()
         taskDialog.style.display = "none"
+        buttonDisabler(false)
     })
 
     taskClose.addEventListener("click", () => {
         taskDialog.style.display = "none"
+        buttonDisabler(false)
     })
 
     //for my task buttons 
@@ -87,6 +93,19 @@ function addNewList() {
     })
 
     console.log(toDo.getLists())
+}
+
+function buttonDisabler(disable) {
+    const myListButton = document.querySelectorAll(".my-list-button")
+    const myTaskButton = document.querySelectorAll(".my-task-button")
+
+    myListButton.forEach((button) => {
+        button.disabled = disable
+    })
+
+    myTaskButton.forEach((button) => {
+        button.disabled = disable
+    })
 }
 
 function initialLoad() {

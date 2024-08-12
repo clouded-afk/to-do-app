@@ -5,6 +5,9 @@
     --submit-color: #15803d;
     --close-color: #f87171;
     --active-button: #d4d4d4;
+    --high-priority: #b91c1c;
+    --med-priority: #f97316;
+    --low-priority: #16a34a;
 }
 
 * {
@@ -141,6 +144,75 @@ li {
     cursor: pointer;
 }
 
+.content {
+    margin: auto;
+    width: 90%;
+}
+
+.task-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 75px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px var(--shadow-color);
+}
+
+.task-header {
+    margin-left: 15px;
+    font-size: 22px;
+}
+
+.task-button-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    width: 125px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.remove-task, .expand-task {
+    margin: auto;
+    font-size: 24px;
+    width: 50px;
+    padding: 5px;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.remove-task {
+    background-color: var(--close-color);
+}
+
+.expand-task {
+    background-color: var(--submit-color);
+}
+
+.task-date {
+    position: absolute;
+    bottom: 0;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.low {
+    border-left: 10px solid var(--low-priority);
+}
+
+.medium {
+    border-left: 10px solid var(--med-priority);
+}
+
+.high {
+    border-left: 10px solid var(--high-priority);
+}
+
+
 .fa-plus {
     margin-left: 5px;
 }
@@ -270,9 +342,6 @@ label {
     margin-bottom: 10px;
 }
 
-#tas-priority {
-    margin-bottom: 20px;
-}
 
 footer {
     background-color: var(--background-color);
@@ -305,4 +374,3 @@ footer {
     margin-left: 5px;
     font-size: 18px;
 }
-

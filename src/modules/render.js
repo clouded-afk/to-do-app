@@ -48,6 +48,7 @@ function addEventHandlers() {
         e.preventDefault()
         taskDialog.style.display = "none"
         addNewTask();
+        renderTasks();
         buttonDisabler(false)
     })
 
@@ -66,6 +67,7 @@ function addEventHandlers() {
             newTaskButton.style.display = "none"
             removeActiveClass()
             button.classList.add("active")
+            renderTasks()
         })
     })
 }
@@ -108,6 +110,7 @@ function addNewList() {
             headerText.textContent = button.textContent
             newTaskButton.style.display = "block"
             removeActiveClass()
+            renderTasks()
             button.classList.add("active")
         })
     })
@@ -126,6 +129,7 @@ function addNewTask() {
 
     const currentList = toDo.getList(headerText.textContent)
     currentList.addTask(newTask)
+    console.log(toDo.getLists())
 }
 
 //remove active class when from buttons when a different button is clicked
@@ -142,6 +146,28 @@ function removeActiveClass() {
     })
 }
 
+// gets the currentList and adds a a new task to it, then displays it on the screen, if selected a different list it will clear the content and show the content for that list
+function renderTasks() {
+    const taskContent = document.querySelector(".content")
+    const headerText = document.querySelector(".content-header-text")
+
+    const currentList =  toDo.getList(headerText.textContent)
+    const currentTasks = currentList.getTasks()
+
+    taskContent.innerHTML = ""
+
+    currentTasks.forEach((task) => {
+        const taskName = task.getName()
+        const taskDate = task.getDueDate()
+        const taskPriority = task.getPriority()
+
+        const taskContainer = document.createElement("div")
+        taskContainer.classList.add("task-container", `${taskPriority}`)
+
+        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date">Due Date: ${taskDate}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div>`
+        taskContent.appendChild(taskContainer)
+    })
+}
 
 
 function initialLoad() {

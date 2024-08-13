@@ -158,7 +158,7 @@ function renderTasks() {
 
     currentTasks.forEach((task) => {
         const taskName = task.getName()
-        const taskDate = task.getDueDate()
+        const taskDate = task.getFormattedDate()
         const taskPriority = task.getPriority()
 
         const taskContainer = document.createElement("div")
@@ -166,6 +166,8 @@ function renderTasks() {
 
         taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date">Due Date: ${taskDate}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div>`
         taskContent.appendChild(taskContainer)
+
+        console.log(taskDate)
     })
 }
 

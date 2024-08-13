@@ -7,7 +7,7 @@ export default class Task {
     }
 
     setName(name) {
-        this.name
+        this.name = name
     }
 
     getName() {
@@ -15,7 +15,7 @@ export default class Task {
     }
 
     setDescription(description) {
-        this.description
+        this.description = description
     }
 
     getDescription() {
@@ -23,7 +23,7 @@ export default class Task {
     }
 
     setDueDate(dueDate) {
-        this.dueDate
+        this.dueDate = dueDate
     }
 
     getDueDate() {
@@ -31,7 +31,7 @@ export default class Task {
     }
 
     setPriority(priority) {
-        this.priority
+        this.priority = priority
     }
 
     getPriority() {

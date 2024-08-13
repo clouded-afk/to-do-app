@@ -92,10 +92,15 @@ function addNewList() {
     const listName = document.getElementById("list-name-input")
 
     const listElement = document.createElement("li")
-    const listButton = document.createElement("button")
+    listElement.classList.add("my-lists-selector")
 
+    const listButton = document.createElement("button")
     listButton.classList.add("my-list-button")
     listButton.textContent = listName.value
+
+    const delButton = document.createElement("button")
+    delButton.classList.add("list-delete")
+    delButton.innerHTML += `<i class="fa-solid fa-trash-can"></i>`
 
     const existingLists = toDo.getLists()
 
@@ -105,6 +110,7 @@ function addNewList() {
     } else {
         toDo.addList(new List(listName.value))
         listElement.appendChild(listButton)
+        listElement.appendChild(delButton)
         myListSection.appendChild(listElement)
     }
 
@@ -136,7 +142,6 @@ function addNewTask() {
 
     const currentList = toDo.getList(headerText.textContent)
     currentList.addTask(newTask)
-    console.log(toDo.getLists())
 }
 
 //remove active class when from buttons when a different button is clicked

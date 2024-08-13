@@ -90,16 +90,23 @@ function buttonDisabler(disable) {
 function addNewList() {
     const myListSection = document.querySelector(".my-lists")
     const listName = document.getElementById("list-name-input")
-    
+
     const listElement = document.createElement("li")
     const listButton = document.createElement("button")
 
     listButton.classList.add("my-list-button")
     listButton.textContent = listName.value
 
-    toDo.addList(new List(listName.value))
-    listElement.appendChild(listButton)
-    myListSection.appendChild(listElement)
+    const existingLists = toDo.getLists()
+
+    if (existingLists.includes(toDo.getList(listName.value))) {
+        alert("List name must be unique, Please enter a different name!")
+        return
+    } else {
+        toDo.addList(new List(listName.value))
+        listElement.appendChild(listButton)
+        myListSection.appendChild(listElement)
+    }
 
     const headerText = document.querySelector(".content-header-text")
     const myListButton = document.querySelectorAll(".my-list-button")
@@ -165,9 +172,8 @@ function renderTasks() {
         taskContainer.classList.add("task-container", `${taskPriority}`)
 
         taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date">Due Date: ${taskDate}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div>`
-        taskContent.appendChild(taskContainer)
 
-        console.log(taskDate)
+        taskContent.appendChild(taskContainer)
     })
 }
 

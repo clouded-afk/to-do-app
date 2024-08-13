@@ -30,12 +30,19 @@ export default class Task {
         return this.dueDate
     }
 
+    getFormattedDate() {
+        const month = this.dueDate.split('-')[1]
+        const day = this.dueDate.split('-')[2]
+        const year = this.dueDate.split('-')[0]
+
+        return `${month}-${day}-${year}`
+    }
+
     setPriority(priority) {
         this.priority = priority
     }
 
     getPriority() {
         return this.priority
-    }
-    
+    }    
 }

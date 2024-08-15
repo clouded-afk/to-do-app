@@ -33,6 +33,7 @@ function addEventHandlers() {
         listDialog.style.display = "none"
         addNewList();
         buttonDisabler(false)
+        console.log(toDo.getLists())
     })
 
     listClose.addEventListener("click", () => {
@@ -60,11 +61,13 @@ function addEventHandlers() {
     //for my task buttons 
     const headerText = document.querySelector(".content-header-text")
     const myTaskButton = document.querySelectorAll(".my-task-button")
+    const contentLine = document.querySelector(".line-div-content")
 
     myTaskButton.forEach((button) => {
         button.addEventListener("click", () => {
             headerText.textContent = button.textContent
             newTaskButton.style.display = "none"
+            contentLine.style.display = "block"
             removeActiveClass()
             button.classList.add("active")
             renderTasks()
@@ -117,17 +120,31 @@ function addNewList() {
     const headerText = document.querySelector(".content-header-text")
     const myListButton = document.querySelectorAll(".my-list-button")
     const newTaskButton = document.querySelector(".new-task-button")
+    const contentLine = document.querySelector(".line-div-content")
     
     myListButton.forEach((button) => {
         button.addEventListener("click", () => {
             headerText.textContent = button.textContent
             newTaskButton.style.display = "block"
+            contentLine.style.display = "block"
             removeActiveClass()
             renderTasks()
             button.classList.add("active")
         })
     })
+
+    const listDeleteButtons = document.querySelectorAll(".list-delete")
+
+    listDeleteButtons.forEach((button) => { 
+        button.addEventListener("click", () => {
+            button.parentElement.remove()
+            headerText.textContent = ""
+            newTaskButton.style.display = "none"
+            contentLine.style.display = "none"
+        })
+    })
 }
+
 
 // Add task to the tasks array of the current list object selected
 function addNewTask() {

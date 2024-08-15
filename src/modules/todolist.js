@@ -27,4 +27,10 @@ export default class ToDoList {
         }
         this.lists.push(newList)
     }
+
+    deleteList(listName) {
+        const listToDelete = this.lists.find((list) => list.getName() === listName)
+
+        this.lists.splice(this.lists.indexOf(listToDelete), 1)
+    }
 }

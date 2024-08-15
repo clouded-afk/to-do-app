@@ -135,15 +135,18 @@ function addNewList() {
 
     delButton.addEventListener("click", () => {
         listElement.remove();
-        headerText.textContent = "";
-        newTaskButton.style.display = "none";
-        contentLine.style.display = "none";
-        removeList(listButton.textContent);
+        headerText.textContent = ""
+        newTaskButton.style.display = "none"
+        contentLine.style.display = "none"
+        removeList(listButton.textContent)
     });
 }
 
+
+// Removes list from lists array in toDo object
 function removeList(listName) {
     toDo.deleteList(listName)
+    console.log(toDo.getLists())
 }
 
 
@@ -188,6 +191,7 @@ function renderTasks() {
 
     currentTasks.forEach((task) => {
         const taskName = task.getName()
+        const taskDescription = task.getDescription()
         const taskDate = task.getFormattedDate()
         const taskPriority = task.getPriority()
 
@@ -199,7 +203,6 @@ function renderTasks() {
         taskContent.appendChild(taskContainer)
     })
 }
-
 
 function initialLoad() {
     addEventHandlers()

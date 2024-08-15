@@ -133,16 +133,17 @@ function addNewList() {
         })
     })
 
-    const listDeleteButtons = document.querySelectorAll(".list-delete")
+    delButton.addEventListener("click", () => {
+        listElement.remove();
+        headerText.textContent = "";
+        newTaskButton.style.display = "none";
+        contentLine.style.display = "none";
+        removeList(listButton.textContent);
+    });
+}
 
-    listDeleteButtons.forEach((button) => { 
-        button.addEventListener("click", () => {
-            button.parentElement.remove()
-            headerText.textContent = ""
-            newTaskButton.style.display = "none"
-            contentLine.style.display = "none"
-        })
-    })
+function removeList(listName) {
+    toDo.deleteList(listName)
 }
 
 

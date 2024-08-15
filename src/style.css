@@ -210,11 +210,19 @@ li {
 }
 
 .remove-task {
-    background-color: var(--close-color);
+    color: var(--high-priority);
+}
+
+.remove-task:hover {
+    color: var(--close-color);
 }
 
 .expand-task {
-    background-color: var(--submit-color);
+    color: var(--accent-color);
+}
+
+.expand-task:hover {
+    color: var(--submit-color);
 }
 
 .task-date {

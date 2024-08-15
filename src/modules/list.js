@@ -30,4 +30,8 @@ export default class List {
         }
         this.tasks.push(newTask)
     }
+
+    deleteTask(taskName) {
+        this.tasks = this.tasks.filter((task) => task.name !== taskName)
+    }
 }

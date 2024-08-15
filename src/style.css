@@ -168,6 +168,10 @@ li {
     cursor: pointer;
 }
 
+.new-list-button:hover, .new-task-button:hover {
+    background-color: var(--submit-color);
+}
+
 .content {
     margin: auto;
     width: 90%;
@@ -243,7 +247,6 @@ li {
 .high {
     border-left: 10px solid var(--high-priority);
 }
-
 
 .fa-plus {
     margin-left: 5px;
@@ -373,7 +376,6 @@ label {
 #task-due-date {
     margin-bottom: 10px;
 }
-
 
 footer {
     background-color: var(--background-color);

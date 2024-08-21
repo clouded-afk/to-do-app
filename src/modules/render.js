@@ -73,11 +73,6 @@ function addEventHandlers() {
             renderTasks()
         })
     })
-
-    // for buttons in task containers
-    const taskDeleteButton = document.querySelector(".remove-task")
-
-    taskDeleteButton.addEventListener("click", removeTask(headerText.textContent, ))
 }
 
 // disables other buttons while a dialog is open
@@ -206,6 +201,13 @@ function renderTasks() {
         taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date"><strong>Due Date:</strong> ${taskDate}</div> <div class="task-description"><strong>Description:</strong> ${taskDescription}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div>`
 
         taskContent.appendChild(taskContainer)
+
+        const deleteTaskButton = taskContainer.querySelector(".remove-task");
+        deleteTaskButton.addEventListener("click", () => {
+            const selectedTask = taskContainer.querySelector(".task-header").textContent
+            removeTask(headerText.textContent, selectedTask)
+            taskContainer.remove()
+        })
     })
 }
 

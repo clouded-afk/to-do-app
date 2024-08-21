@@ -201,7 +201,7 @@ function renderTasks() {
         const taskContainer = document.createElement("div")
         taskContainer.classList.add("task-container", `${taskPriority}`)
 
-        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date"><strong>Due Date:</strong> ${taskDate}</div> <div class="task-description"><strong>Description:</strong> ${taskDescription}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div>`
+        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date"><strong>Due Date:</strong> ${taskDate}</div> <div class="task-description"><strong>Description:</strong><br> ${taskDescription}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div> <button class="edit-task"><i class="fas fa-edit"></i></button>`
 
         taskContent.appendChild(taskContainer)
 
@@ -217,12 +217,18 @@ function renderTasks() {
         // For expand buttons
         const expandTasKButton = taskContainer.querySelector(".expand-task")
         const taskDescriptionDisplay = taskContainer.querySelector(".task-description")
+        const editButton = taskContainer.querySelector(".edit-task")
 
         expandTasKButton.addEventListener("click", () => {
             const containerHeight = taskContainer.style.height
             const descriptionDisplay = taskDescriptionDisplay.style.display
-            taskContainer.style.height = containerHeight === '150px' ? '75px' : '150px'
+            const editButtonDisplay = editButton.style.display
+
+            taskContainer.style.height = containerHeight === "200px" ? "90px" : "200px"
+
             taskDescriptionDisplay.style.display = descriptionDisplay === "block" ? "none" : "block"
+
+            editButton.style.display = editButtonDisplay === "block" ? "none" : "block"
         })
     })
 }

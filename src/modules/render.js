@@ -133,6 +133,7 @@ function addNewList() {
         })
     })
 
+    // Removes list from toDo object, and the element from the dom
     delButton.addEventListener("click", () => {
         listElement.remove();
         headerText.textContent = ""
@@ -202,6 +203,7 @@ function renderTasks() {
 
         taskContent.appendChild(taskContainer)
 
+        // Removes task container, and task from its respective list
         const deleteTaskButton = taskContainer.querySelector(".remove-task");
         deleteTaskButton.addEventListener("click", () => {
             const selectedTask = taskContainer.querySelector(".task-header").textContent
@@ -211,6 +213,7 @@ function renderTasks() {
     })
 }
 
+// Removes task from the selected list
 function removeTask(listName, taskName) {
     const selectedList = toDo.getList(listName)
     selectedList.deleteTask(taskName)

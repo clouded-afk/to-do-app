@@ -207,10 +207,21 @@ function renderTasks() {
 
         // Removes task container, and task from its respective list
         const deleteTaskButton = taskContainer.querySelector(".remove-task");
+
         deleteTaskButton.addEventListener("click", () => {
             const selectedTask = taskContainer.querySelector(".task-header").textContent
             removeTask(headerText.textContent, selectedTask)
             taskContainer.remove()
+        })
+
+        // For expand buttons
+        const expandTasKButton = taskContainer.querySelector(".expand-task")
+        const taskDescriptionDisplay = taskContainer.querySelector(".task-description")
+
+        expandTasKButton.addEventListener("click", () => {
+            const containerHeight = taskContainer.style.height
+
+            taskContainer.style.height = containerHeight === '150px' ? '75px' : '150px'
         })
     })
 }

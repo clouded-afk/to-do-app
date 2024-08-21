@@ -134,11 +134,13 @@ function addNewList() {
     })
 
     // Removes list from toDo object, and the element from the dom
+    const taskContent = document.querySelector(".content")
     delButton.addEventListener("click", () => {
         listElement.remove();
         headerText.textContent = ""
         newTaskButton.style.display = "none"
         contentLine.style.display = "none"
+        taskContent.innerHTML = ""
         removeList(listButton.textContent)
     });
 }
@@ -217,7 +219,7 @@ function renderTasks() {
 function removeTask(listName, taskName) {
     const selectedList = toDo.getList(listName)
     selectedList.deleteTask(taskName)
-    console.log(toDo.getList(selectedList))
+    console.log(toDo.getList(listName))
 }
 
 function initialLoad() {

@@ -220,8 +220,9 @@ function renderTasks() {
 
         expandTasKButton.addEventListener("click", () => {
             const containerHeight = taskContainer.style.height
-
+            const descriptionDisplay = taskDescriptionDisplay.style.display
             taskContainer.style.height = containerHeight === '150px' ? '75px' : '150px'
+            taskDescriptionDisplay.style.display = descriptionDisplay === "block" ? "none" : "block"
         })
     })
 }

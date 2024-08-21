@@ -229,6 +229,12 @@ li {
     color: var(--submit-color);
 }
 
+.task-description {
+    display: none;
+    font-size: 20px;
+    padding: 20px;
+}
+
 .task-date {
     position: absolute;
     bottom: 0;
@@ -367,6 +373,7 @@ label {
     border-radius: 20px;
     border: none;
 }
+
 
 #task-due-date, #task-priority{
     width: 70%;

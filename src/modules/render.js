@@ -217,6 +217,7 @@ function renderTasks() {
 function removeTask(listName, taskName) {
     const selectedList = toDo.getList(listName)
     selectedList.deleteTask(taskName)
+    console.log(toDo.getList(selectedList))
 }
 
 function initialLoad() {

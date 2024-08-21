@@ -73,6 +73,11 @@ function addEventHandlers() {
             renderTasks()
         })
     })
+
+    // for buttons in task containers
+    const taskDeleteButton = document.querySelector(".remove-task")
+
+    taskDeleteButton.addEventListener("click", removeTask(headerText.textContent, ))
 }
 
 // disables other buttons while a dialog is open
@@ -198,10 +203,15 @@ function renderTasks() {
         const taskContainer = document.createElement("div")
         taskContainer.classList.add("task-container", `${taskPriority}`)
 
-        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date">Due Date: ${taskDate}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div>`
+        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date"><strong>Due Date:</strong> ${taskDate}</div> <div class="task-description"><strong>Description:</strong> ${taskDescription}</div> <div class="task-button-container"><button class="expand-task"><i class="fa-solid fa-expand"></i></button> <button class="remove-task"><i class="fa-solid fa-trash-can"></i></button></div>`
 
         taskContent.appendChild(taskContainer)
     })
+}
+
+function removeTask(listName, taskName) {
+    const selectedList = toDo.getList(listName)
+    selectedList.deleteTask(taskName)
 }
 
 function initialLoad() {

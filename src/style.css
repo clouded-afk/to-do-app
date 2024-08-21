@@ -140,7 +140,9 @@ li {
 }
 
 .content-container {
+    height: 100%;
     width: 80%;
+    overflow: hidden;
 }
 
 .content-header-container {
@@ -175,7 +177,9 @@ li {
 
 .content {
     margin: auto;
+    height: 95%;
     width: 90%;
+    overflow: auto;
 }
 
 .task-container {
@@ -243,7 +247,7 @@ li {
 
 .task-description {
     display: none;
-    font-size: 18px;
+    font-size: 16px;
     margin-top: 15px;
     margin-bottom: 15px;
     margin-left: 15px;

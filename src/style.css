@@ -248,6 +248,7 @@ li {
     margin-bottom: 15px;
     margin-left: 15px;
     margin-right: 100px;
+    word-wrap: break-word;
 }
 
 .task-date {

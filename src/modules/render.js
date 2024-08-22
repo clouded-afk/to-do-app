@@ -87,6 +87,30 @@ function buttonDisabler(disable) {
     myTaskButton.forEach((button) => {
         button.disabled = disable
     })
+
+    const listDelete = document.querySelectorAll(".list-delete")
+
+    listDelete.forEach((button) => {
+        button.disabled = disable
+    })
+
+    const taskDelete = document.querySelectorAll(".remove-task")
+    const taskExpand = document.querySelectorAll(".expand-task")
+    const taskEdit = document.querySelectorAll(".edit-task")
+
+    taskDelete.forEach((button) => {
+        button.disabled = disable
+    })
+
+    taskExpand.forEach((button) => {
+        button.disabled = disable
+    })
+
+    taskEdit.forEach((button) => {
+        button.disabled = disable
+    })
+
+
 }
 
 // adds list button to the page and pushes that list into the lists array of the ToDoList object
@@ -229,6 +253,13 @@ function renderTasks() {
             taskDescriptionDisplay.style.display = descriptionDisplay === "block" ? "none" : "block"
 
             editButton.style.display = editButtonDisplay === "block" ? "none" : "block"
+        })
+
+        // For edit task button
+        const editTaskDialog = document.querySelector(".edit-task-dialog")
+
+        editButton.addEventListener("click", () => {
+            editTaskDialog.style.display = "flex"
         })
     })
 }

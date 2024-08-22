@@ -7,6 +7,7 @@ const toDo = new ToDoList();
 function addEventHandlers() {
     const listDialog = document.querySelector(".list-dialog")
     const taskDialog = document.querySelector(".task-dialog")
+    const editTaskDialog = document.querySelector(".edit-task-dialog")
 
     // For new task and new list buttons
     const newListButton = document.querySelector(".new-list-button")
@@ -15,12 +16,14 @@ function addEventHandlers() {
     newListButton.addEventListener("click", () => {
         listDialog.style.display = "flex"
         taskDialog.style.display = "none"
+        editTaskDialog.style.display = "none"
         buttonDisabler(true)
     })
 
     newTaskButton.addEventListener("click", () => {
         taskDialog.style.display = "flex"
         listDialog.style.display = "none"
+        editTaskDialog.style.display = "none"
         buttonDisabler(true)
     })
 
@@ -55,6 +58,20 @@ function addEventHandlers() {
 
     taskClose.addEventListener("click", () => {
         taskDialog.style.display = "none"
+        buttonDisabler(false)
+    })
+
+    // for edit-task form buttons
+    const editTaskSave = document.querySelector(".task-save")
+    const editTaskClose = document.querySelector(".close-edit-task")
+
+    editTaskSave.addEventListener("click", () => {
+        editTaskDialog.style.display = "none"
+        buttonDisabler(false)
+    })
+
+    editTaskClose.addEventListener("click", () => {
+        editTaskDialog.style.display = "none"
         buttonDisabler(false)
     })
 
@@ -260,6 +277,7 @@ function renderTasks() {
 
         editButton.addEventListener("click", () => {
             editTaskDialog.style.display = "flex"
+            buttonDisabler(true)
         })
     })
 }

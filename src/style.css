@@ -4,7 +4,7 @@
     --input-color: #cbd5e1;
     --submit-color: #15803d;
     --close-color: #f87171;
-    --edit-button: #60a5fa;
+    --edit-button: #0284c7;
     --active-button: #d4d4d4;
     --high-priority: #b91c1c;
     --med-priority: #f97316;
@@ -319,7 +319,7 @@ li {
     border: none;
 }
 
-#list-submit, .list-close, #task-submit, .task-close {
+#list-submit, .list-close, #task-submit, .task-close, .task-save, .close-edit-task {
     color: white;
     font-size: 18px;
     font-weight: bold;
@@ -330,25 +330,35 @@ li {
     cursor: pointer;
 }
 
-#list-submit, #task-submit {
+#list-submit, #task-submit, .task-save {
     background-color: var(--submit-color);
     margin: auto;
 }
 
-.list-close, .task-close {
+.list-close, .task-close, .close-edit-task {
     background-color: var(--close-color);
 }
 
-#task-submit {
+#task-submit, .task-save {
     margin-top: 50px;
     margin-bottom: 10px;
+}
+
+.edit-form-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    width: 100%;
+    margin-bottom: 25px;
 }
 
 label {
     margin-left: 20px;
 }
 
-.task-dialog {
+.task-dialog, .edit-task-dialog {
     display: none;
     align-items: center;
     flex-direction: column;
@@ -361,7 +371,7 @@ label {
     box-shadow: 2px 2px 2px 2px var(--shadow-color);
 }
 
-.task-form {
+.task-form, .edit-task-form {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -371,7 +381,7 @@ label {
     margin-left: 90px;
 }
 
-#task-name-input {
+#task-name-input, #edit-task-name {
     background-color: var(--input-color);
     width: 70%;
     height: 30px;
@@ -382,7 +392,7 @@ label {
     border: none;
 }
 
-#task-description-input {
+#task-description-input, #edit-description {
     background-color: var(--input-color);
     resize: none;
     width: 70%;
@@ -395,12 +405,12 @@ label {
 }
 
 
-#task-due-date, #task-priority{
+#task-due-date, #task-priority, #edit-due-date, #edit-priority{
     width: 70%;
     margin: auto;
 }
 
-#task-due-date {
+#task-due-date, #edit-due-date {
     margin-bottom: 10px;
 }
 

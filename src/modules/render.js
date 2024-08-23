@@ -208,20 +208,21 @@ function addNewTask() {
 }
 
 // Edit information about a task
-function editExistingTask(taskName) {
+function populateEditTaskForm(taskName) {
     const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
     const selectedTask = currentList.getTask(taskName)
 
-    const editNameInput = document.querySelector(".edit-task-name").value 
-    const editDescriptionInput = document.querySelector(".edit-description").value
-    const editDueDateInput = document.querySelector(".edit-due-date").value
-    const editPriorityInput = document.querySelector(".edit-priority").value
+    const editNameInput = document.getElementById("edit-task-name") 
+    const editDescriptionInput = document.getElementById("edit-description")
+    const editDueDateInput = document.getElementById("edit-due-date")
+    const editPriorityInput = document.getElementById("edit-priority")
 
-    editNameInput = selectedTask.getName()
-    editDescriptionInput = selectedTask.getDescription()
-    editDueDateInput = selectedTask.getDueDate()
-    editPriorityInput = selectedTask.getPriority()
+    editNameInput.value = selectedTask.getName()
+    editDescriptionInput.value = selectedTask.getDescription()
+    editDueDateInput.value = selectedTask.getDueDate()
+    editPriorityInput.value = selectedTask.getPriority()
 
+    console.log(currentList)
     console.log(selectedTask)
 }
 
@@ -295,7 +296,7 @@ function renderTasks() {
         editButton.addEventListener("click", () => {
             editTaskDialog.style.display = "flex"
             buttonDisabler(true)
-            editExistingTask(selectedTask)
+            populateEditTaskForm(selectedTask)
         })
     })
 }

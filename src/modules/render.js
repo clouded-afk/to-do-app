@@ -126,8 +126,6 @@ function buttonDisabler(disable) {
     taskEdit.forEach((button) => {
         button.disabled = disable
     })
-
-
 }
 
 // adds list button to the page and pushes that list into the lists array of the ToDoList object
@@ -209,6 +207,24 @@ function addNewTask() {
     currentList.addTask(newTask)
 }
 
+// Edit information about a task
+function editExistingTask(taskName) {
+    const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
+    const selectedTask = currentList.getTask(taskName)
+
+    const editNameInput = document.querySelector(".edit-task-name").value 
+    const editDescriptionInput = document.querySelector(".edit-description").value
+    const editDueDateInput = document.querySelector(".edit-due-date").value
+    const editPriorityInput = document.querySelector(".edit-priority").value
+
+    editNameInput = selectedTask.getName()
+    editDescriptionInput = selectedTask.getDescription()
+    editDueDateInput = selectedTask.getDueDate()
+    editPriorityInput = selectedTask.getPriority()
+
+    console.log(selectedTask)
+}
+
 //remove active class when from buttons when a different button is clicked
 function removeActiveClass() {
     const myTaskButton = document.querySelectorAll(".my-task-button")
@@ -246,11 +262,12 @@ function renderTasks() {
 
         taskContent.appendChild(taskContainer)
 
+        const selectedTask = taskContainer.querySelector(".task-header").textContent
+
         // Removes task container, and task from its respective list
         const deleteTaskButton = taskContainer.querySelector(".remove-task");
 
         deleteTaskButton.addEventListener("click", () => {
-            const selectedTask = taskContainer.querySelector(".task-header").textContent
             removeTask(headerText.textContent, selectedTask)
             taskContainer.remove()
         })
@@ -278,6 +295,7 @@ function renderTasks() {
         editButton.addEventListener("click", () => {
             editTaskDialog.style.display = "flex"
             buttonDisabler(true)
+            editExistingTask(selectedTask)
         })
     })
 }

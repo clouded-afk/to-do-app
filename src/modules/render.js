@@ -3,6 +3,7 @@ import List from "./list";
 import Task from "./task";
 
 const toDo = new ToDoList();
+let currentTask;
 
 function addEventHandlers() {
     const listDialog = document.querySelector(".list-dialog")
@@ -64,10 +65,12 @@ function addEventHandlers() {
     // for edit-task form buttons
     const editTaskSave = document.querySelector(".task-save")
     const editTaskClose = document.querySelector(".close-edit-task")
+    const taskHeader = document.querySelectorAll(".task-header")
 
     editTaskSave.addEventListener("click", () => {
         editTaskDialog.style.display = "none"
         buttonDisabler(false)
+        saveEditedTask()
     })
 
     editTaskClose.addEventListener("click", () => {
@@ -207,7 +210,7 @@ function addNewTask() {
     currentList.addTask(newTask)
 }
 
-// Edit information about a task
+// Populate Edit Task form with correct data based on selected task to edit
 function populateEditTaskForm(taskName) {
     const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
     const selectedTask = currentList.getTask(taskName)
@@ -221,6 +224,27 @@ function populateEditTaskForm(taskName) {
     editDescriptionInput.value = selectedTask.getDescription()
     editDueDateInput.value = selectedTask.getDueDate()
     editPriorityInput.value = selectedTask.getPriority()
+
+    console.log(currentList)
+    console.log(selectedTask)
+
+    currentTask = taskName
+}
+
+// Saves task after Edits
+function saveEditedTask() {
+    const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
+    const selectedTask = currentList.getTask(currentTask)
+
+    const editedName = document.getElementById("edit-task-name").value 
+    const editedDescription = document.getElementById("edit-description").value
+    const editedDueDate = document.getElementById("edit-due-date").value
+    const editedPriority = document.getElementById("edit-priority").value
+
+    selectedTask.setName(editedName)
+    selectedTask.setDescription(editedDescription)
+    selectedTask.setDueDate(editedDueDate)
+    selectedTask.setPriority(editedPriority)
 
     console.log(currentList)
     console.log(selectedTask)

@@ -71,6 +71,7 @@ function addEventHandlers() {
         editTaskDialog.style.display = "none"
         buttonDisabler(false)
         saveEditedTask()
+        console.log(toDo.getLists())
     })
 
     editTaskClose.addEventListener("click", () => {
@@ -298,11 +299,11 @@ function renderTasks() {
         })
 
         // For expand buttons
-        const expandTasKButton = taskContainer.querySelector(".expand-task")
+        const expandTaskButton = taskContainer.querySelector(".expand-task")
         const taskDescriptionDisplay = taskContainer.querySelector(".task-description")
         const editButton = taskContainer.querySelector(".edit-task")
 
-        expandTasKButton.addEventListener("click", () => {
+        expandTaskButton.addEventListener("click", () => {
             const containerHeight = taskContainer.style.height
             const descriptionDisplay = taskDescriptionDisplay.style.display
             const editButtonDisplay = editButton.style.display

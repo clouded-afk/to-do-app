@@ -71,6 +71,7 @@ function addEventHandlers() {
         editTaskDialog.style.display = "none"
         buttonDisabler(false)
         saveEditedTask()
+        renderTaskEdits()
         console.log(toDo.getLists())
     })
 
@@ -246,9 +247,16 @@ function saveEditedTask() {
     selectedTask.setDescription(editedDescription)
     selectedTask.setDueDate(editedDueDate)
     selectedTask.setPriority(editedPriority)
+}
 
-    console.log(currentList)
-    console.log(selectedTask)
+function renderTaskEdits() {
+    const taskContainers = document.querySelectorAll(".task-container") 
+
+    taskContainers.forEach((task) => {
+        task.remove()
+    })
+
+    renderTasks()
 }
 
 //remove active class when from buttons when a different button is clicked

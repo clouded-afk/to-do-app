@@ -35,7 +35,7 @@ function addEventHandlers() {
     listSubmit.addEventListener("click", (e) => {
         e.preventDefault()
         listDialog.style.display = "none"
-        addNewList();
+        addNewList()
         buttonDisabler(false)
         console.log(toDo.getLists())
     })
@@ -52,8 +52,8 @@ function addEventHandlers() {
     taskSubmit.addEventListener("click", (e) => {
         e.preventDefault()
         taskDialog.style.display = "none"
-        addNewTask();
-        renderTasks();
+        addNewTask()
+        renderTasks()
         buttonDisabler(false)
     })
 
@@ -65,7 +65,6 @@ function addEventHandlers() {
     // for edit-task form buttons
     const editTaskSave = document.querySelector(".task-save")
     const editTaskClose = document.querySelector(".close-edit-task")
-    const taskHeader = document.querySelectorAll(".task-header")
 
     editTaskSave.addEventListener("click", () => {
         editTaskDialog.style.display = "none"
@@ -193,7 +192,6 @@ function addNewList() {
 // Removes list from lists array in toDo object
 function removeList(listName) {
     toDo.deleteList(listName)
-    console.log(toDo.getLists())
 }
 
 
@@ -227,9 +225,6 @@ function populateEditTaskForm(taskName) {
     editDueDateInput.value = selectedTask.getDueDate()
     editPriorityInput.value = selectedTask.getPriority()
 
-    console.log(currentList)
-    console.log(selectedTask)
-
     currentTask = taskName
 }
 
@@ -249,6 +244,7 @@ function saveEditedTask() {
     selectedTask.setPriority(editedPriority)
 }
 
+// Removes the original task container, and replaces it with the edited version
 function renderTaskEdits() {
     const taskContainers = document.querySelectorAll(".task-container") 
 
@@ -338,7 +334,6 @@ function renderTasks() {
 function removeTask(listName, taskName) {
     const selectedList = toDo.getList(listName)
     selectedList.deleteTask(taskName)
-    console.log(toDo.getList(listName))
 }
 
 function initialLoad() {

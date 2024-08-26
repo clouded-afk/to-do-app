@@ -217,6 +217,14 @@ li {
     cursor: pointer;
 }
 
+.myTask-expand {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
 .remove-task {
     color: var(--high-priority);
 }

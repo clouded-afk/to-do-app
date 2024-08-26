@@ -53,7 +53,6 @@ function addEventHandlers() {
         e.preventDefault()
         taskDialog.style.display = "none"
         addNewTask()
-        pushAllTasks()
         renderTasks()
         buttonDisabler(false)
     })
@@ -177,10 +176,6 @@ function addNewList() {
             removeActiveClass()
             renderTasks()
             button.classList.add("active")
-
-            if (button.textContent === "All Tasks") {
-                renderAllTasks()
-            }
         })
     })
 
@@ -215,7 +210,10 @@ function addNewTask() {
     const headerText = document.querySelector(".content-header-text")
 
     const currentList = toDo.getList(headerText.textContent)
+    const allTaskList =  toDo.getList("All Tasks")
+
     currentList.addTask(newTask)
+    allTaskList.addTask(newTask)
 }
 
 // Populate Edit Task form with correct data based on selected task to edit
@@ -263,21 +261,7 @@ function renderTaskEdits() {
     renderTasks()
 }
 
-function pushAllTasks() {
-    const allTasksList = toDo.getList("All Tasks")
-
-    const taskName = document.getElementById("task-name-input")
-    const taskDescription = document.getElementById("task-description-input")
-    const taskDueDate = document.getElementById("task-due-date")
-    const taskPriority =  document.getElementById("task-priority")
-
-    const newTask = new Task(taskName.value, taskDescription.value, taskDueDate.value, taskPriority.value)
-
-    allTasksList.addTask(newTask)
-
-    console.log(toDo.getLists())
-}
-
+// Displays all tasks when all tasks button is clicked
 function renderAllTasks() {
     const taskContent = document.querySelector(".content")
 
@@ -295,9 +279,22 @@ function renderAllTasks() {
         const taskContainer = document.createElement("div")
         taskContainer.classList.add("task-container", `${taskPriority}`)
         
-        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date"><strong>Due Date:</strong> ${taskDate}</div> <div class="task-description"><strong>Description:</strong><br> ${taskDescription}</div> <button class="expand-task"><i class="fa-solid fa-expand"></i></button>`
+        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date"><strong>Due Date:</strong> ${taskDate}</div> <div class="task-description"><strong>Description:</strong><br> ${taskDescription}</div> <button class="expand-task myTask-expand"><i class="fa-solid fa-expand"></i></button>`
 
         taskContent.appendChild(taskContainer)
+
+        const expandTaskButton = taskContainer.querySelector(".expand-task")
+        const taskDescriptionDisplay = taskContainer.querySelector(".task-description")
+        const editButton = taskContainer.querySelector(".edit-task")
+
+        expandTaskButton.addEventListener("click", () => {
+            const containerHeight = taskContainer.style.height
+            const descriptionDisplay = taskDescriptionDisplay.style.display
+
+            taskContainer.style.height = containerHeight === "200px" ? "90px" : "200px"
+
+            taskDescriptionDisplay.style.display = descriptionDisplay === "block" ? "none" : "block"
+        })
     })
 }
 

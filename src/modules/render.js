@@ -91,10 +91,7 @@ function addEventHandlers() {
             contentLine.style.display = "block"
             removeActiveClass()
             button.classList.add("active")
-
-            if (button.textContent === "All Tasks") {
-                renderAllTasks()
-            }
+            renderTasksForMyTasks()
         })
     })
 }
@@ -198,7 +195,7 @@ function removeList(listName) {
 }
 
 
-// Add task to the tasks array of the current list object selected
+// Add task to the tasks array of the current list object selected | Pushes all newly created tasks to all task list
 function addNewTask() {
     const taskName = document.getElementById("task-name-input")
     const taskDescription = document.getElementById("task-description-input")
@@ -262,15 +259,16 @@ function renderTaskEdits() {
 }
 
 // Displays all tasks when all tasks button is clicked
-function renderAllTasks() {
+function renderTasksForMyTasks() {
+    const headerText = document.querySelector(".content-header-text")
     const taskContent = document.querySelector(".content")
 
-    const allTaskList = toDo.getList("All Tasks")
-    const allTasks = allTaskList.getTasks()
+    const selectedList = toDo.getList(headerText.textContent)
+    const tasks = selectedList.getTasks()
 
     taskContent.innerHTML = ""
 
-    allTasks.forEach((task) => {
+    tasks.forEach((task) => {
         const taskName = task.getName()
         const taskDescription = task.getDescription()
         const taskDate = task.getFormattedDate()
@@ -285,7 +283,6 @@ function renderAllTasks() {
 
         const expandTaskButton = taskContainer.querySelector(".expand-task")
         const taskDescriptionDisplay = taskContainer.querySelector(".task-description")
-        const editButton = taskContainer.querySelector(".edit-task")
 
         expandTaskButton.addEventListener("click", () => {
             const containerHeight = taskContainer.style.height

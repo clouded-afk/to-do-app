@@ -53,6 +53,7 @@ function addEventHandlers() {
         e.preventDefault()
         taskDialog.style.display = "none"
         addNewTask()
+        pushAllTasks()
         renderTasks()
         buttonDisabler(false)
     })
@@ -253,6 +254,25 @@ function renderTaskEdits() {
     })
 
     renderTasks()
+}
+
+function pushAllTasks() {
+    const allTasksList = toDo.getList("All Tasks")
+
+    const taskName = document.getElementById("task-name-input")
+    const taskDescription = document.getElementById("task-description-input")
+    const taskDueDate = document.getElementById("task-due-date")
+    const taskPriority =  document.getElementById("task-priority")
+
+    const newTask = new Task(taskName.value, taskDescription.value, taskDueDate.value, taskPriority.value)
+
+    allTasksList.addTask(newTask)
+
+    console.log(toDo.getLists())
+}
+
+function renderAllTasks() {
+
 }
 
 //remove active class when from buttons when a different button is clicked

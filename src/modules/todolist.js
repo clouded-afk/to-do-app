@@ -1,3 +1,4 @@
+import { compareAsc, toDate } from "date-fns"
 import List from "./list"
 import Task from "./task"
 
@@ -50,5 +51,24 @@ export default class ToDoList {
                 this.getList("Today").addTask(new Task(taskName, task.getDescription(), task.getDueDate(), task.getPriority()))
             })
         })
+    }
+
+    addToThisWeekList() {
+        this.getList("This Week").tasks = []
+
+        this.lists.forEach((list) => {
+            if (list.getName() === "Today" || list.getName() === "This Week") {
+                return
+            }
+
+            const thisWeeksTasks = list.getThisWeeksTasks()
+
+            thisWeeksTasks.forEach((task) => {
+                const taskName = `${task.getName()} (${list.getName()})`
+                this.getList("This Week").addTask(new Task(taskName, task.getDescription(), task.getDueDate(), task.getPriority()))
+            })
+        })
+
+        this.getList("This Week").setTasks(this.getList("This Week").getTasks().sort((taskOne, taskTwo) => compareAsc(toDate(new Date(taskOne.getFormattedDate())), toDate(new Date(taskTwo.getFormattedDate())))))
     }
 }

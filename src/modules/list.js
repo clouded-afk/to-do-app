@@ -1,4 +1,4 @@
-import { toDate, isToday, isThisWeek, subDays } from "date-fns"
+import { toDate, isToday, isThisWeek, subDays, sub } from "date-fns"
 
 export default class List {
     constructor(name) {
@@ -41,6 +41,13 @@ export default class List {
         return this.tasks.filter((task) => {
             const taskDate = new Date(task.getFormattedDate())
             return isToday(toDate(taskDate))
+        })
+    }
+
+    getThisWeeksTasks() {
+        return this.tasks.filter((task) => {
+            const taskDate = new Date(task.getFormattedDate())
+            return isThisWeek(subDays(toDate(taskDate), 1))
         })
     }
 }

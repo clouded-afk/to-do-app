@@ -351,6 +351,7 @@ function renderTasks() {
 
         deleteTaskButton.addEventListener("click", () => {
             removeTask(headerText.textContent, selectedTask)
+            removeTask("All Tasks", selectedTask)
             taskContainer.remove()
         })
 

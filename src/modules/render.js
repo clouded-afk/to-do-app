@@ -92,7 +92,10 @@ function addEventHandlers() {
             contentLine.style.display = "block"
             removeActiveClass()
             button.classList.add("active")
-            renderTasks()
+
+            if (button.textContent === "All Tasks") {
+                renderAllTasks()
+            }
         })
     })
 }
@@ -174,6 +177,10 @@ function addNewList() {
             removeActiveClass()
             renderTasks()
             button.classList.add("active")
+
+            if (button.textContent === "All Tasks") {
+                renderAllTasks()
+            }
         })
     })
 
@@ -272,7 +279,26 @@ function pushAllTasks() {
 }
 
 function renderAllTasks() {
+    const taskContent = document.querySelector(".content")
 
+    const allTaskList = toDo.getList("All Tasks")
+    const allTasks = allTaskList.getTasks()
+
+    taskContent.innerHTML = ""
+
+    allTasks.forEach((task) => {
+        const taskName = task.getName()
+        const taskDescription = task.getDescription()
+        const taskDate = task.getFormattedDate()
+        const taskPriority = task.getPriority()
+
+        const taskContainer = document.createElement("div")
+        taskContainer.classList.add("task-container", `${taskPriority}`)
+        
+        taskContainer.innerHTML += `<div class="task-header">${taskName}</div> <div class="task-date"><strong>Due Date:</strong> ${taskDate}</div> <div class="task-description"><strong>Description:</strong><br> ${taskDescription}</div> <button class="expand-task"><i class="fa-solid fa-expand"></i></button>`
+
+        taskContent.appendChild(taskContainer)
+    })
 }
 
 //remove active class when from buttons when a different button is clicked

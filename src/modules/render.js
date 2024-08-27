@@ -256,6 +256,25 @@ function saveEditedTask() {
     selectedAllTask.setDescription(editedDescription)
     selectedAllTask.setDueDate(editedDueDate)
     selectedAllTask.setPriority(editedPriority)
+
+    // For Today List
+    const todayList = toDo.getList("Today")
+    const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
+    const todaysDate = new Date().toISOString().split('T')[0];
+
+    if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
+        if (editedDueDate !== todaysDate) {
+            removeTask("Today", `${currentTask} (${currentList.getName()})`)
+        } else {
+            selectedTodayTask.setName(`${editedName} (${currentList.getName()})`)
+            selectedTodayTask.setDescription(editedDescription)
+            selectedTodayTask.setDueDate(editedDueDate)
+            selectedTodayTask.setPriority(editedPriority)
+        }
+    } else if (editedDueDate === todaysDate){
+        toDo.addToTodayList()
+    }
+
 }
 
 // Removes the original task container, and replaces it with the edited version

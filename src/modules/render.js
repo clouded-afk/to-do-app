@@ -275,6 +275,30 @@ function saveEditedTask() {
         toDo.addToTodayList()
     }
 
+    // For This Week List
+    const thisWeekList = toDo.getList("This Week")
+    const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList.getName()})`)
+
+    const editedDate = new Date(editedDueDate)
+    const currentDate = new Date()
+    const startOfWeek = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()))
+    const endOfWeek = new Date(currentDate.setDate(startOfWeek.getDate() + 6))
+
+    if (editedDate >= startOfWeek && editedDate <= endOfWeek) {
+        if (selectedThisWeekTask) {
+            selectedThisWeekTask.setName(`${editedName} (${currentList.getName()})`)
+            selectedThisWeekTask.setDescription(editedDescription)
+            selectedThisWeekTask.setDueDate(editedDueDate)
+            selectedThisWeekTask.setPriority(editedPriority)
+        } else {
+            toDo.addToThisWeekList()
+        }
+    } else {
+        if (selectedThisWeekTask) {
+            removeTask("This Week", `${currentTask} (${currentList.getName()})`)
+        }
+    }
+
 }
 
 // Removes the original task container, and replaces it with the edited version

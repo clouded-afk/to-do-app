@@ -1,4 +1,4 @@
-import { toDate, isToday, isThisWeek, subDays, sub } from "date-fns"
+import { toDate, isToday, isThisWeek, subDays } from "date-fns"
 
 export default class List {
     constructor(name) {

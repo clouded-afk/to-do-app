@@ -36,11 +36,28 @@ export default class ToDoList {
         this.lists.splice(this.lists.indexOf(listToDelete), 1)
     }
 
+    addToAllTaskList() {
+        this.getList("All Tasks").tasks = []
+
+        this.lists.forEach((list) => {
+            if (list.getName() === "Today" || list.getName() === "This Week" || list.getName() === "All Tasks") {
+                return
+            }
+
+            const allTasks = list.getTasks()
+
+            allTasks.forEach((task) => {
+                const taskName = `${task.getName()} (${list.getName()})`
+                this.getList("All Tasks").addTask(new Task(taskName, task.getDescription(), task.getDueDate(), task.getPriority()))
+            })
+        })
+    }
+
     addToTodayList() {
         this.getList("Today").tasks = []
 
         this.lists.forEach((list) => {
-            if (list.getName() === "Today" || list.getName() === "This Week") {
+            if (list.getName() === "Today" || list.getName() === "This Week" || list.getName() === "All Tasks") {
                 return
             }
 
@@ -57,7 +74,7 @@ export default class ToDoList {
         this.getList("This Week").tasks = []
 
         this.lists.forEach((list) => {
-            if (list.getName() === "Today" || list.getName() === "This Week") {
+            if (list.getName() === "Today" || list.getName() === "This Week" || list.getName() === "All Tasks") {
                 return
             }
 

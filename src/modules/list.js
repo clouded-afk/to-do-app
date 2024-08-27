@@ -50,4 +50,8 @@ export default class List {
             return isThisWeek(subDays(toDate(taskDate), 1))
         })
     }
+
+    contains(taskName) {
+        return this.tasks.some((task) => task.getName() === taskName)
+    }
 }

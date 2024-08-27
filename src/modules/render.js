@@ -207,10 +207,11 @@ function addNewTask() {
     const headerText = document.querySelector(".content-header-text")
 
     const currentList = toDo.getList(headerText.textContent)
-    const allTaskList =  toDo.getList("All Tasks")
 
     currentList.addTask(newTask)
-    allTaskList.addTask(newTask)
+    toDo.addToAllTaskList()
+    toDo.addToTodayList()
+    toDo.addToThisWeekList()
 }
 
 // Populate Edit Task form with correct data based on selected task to edit
@@ -235,11 +236,7 @@ function populateEditTaskForm(taskName) {
 function saveEditedTask() {
     const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
 
-    const allTasksList = toDo.getList("All Tasks")
-
-
     const selectedTask = currentList.getTask(currentTask)
-    const selectedAllTask = allTasksList.getTask(currentTask)
 
     const editedName = document.getElementById("edit-task-name").value 
     const editedDescription = document.getElementById("edit-description").value
@@ -250,12 +247,6 @@ function saveEditedTask() {
     selectedTask.setDescription(editedDescription)
     selectedTask.setDueDate(editedDueDate)
     selectedTask.setPriority(editedPriority)
-
-    selectedAllTask.setName(editedName)
-    selectedAllTask.setDescription(editedDescription)
-    selectedAllTask.setDueDate(editedDueDate)
-    selectedAllTask.setPriority(editedPriority)
-
 }
 
 // Removes the original task container, and replaces it with the edited version
@@ -267,7 +258,6 @@ function renderTaskEdits() {
     })
 
     renderTasks()
-    renderTasksForMyTasks()
 }
 
 // Displays all tasks when all tasks button is clicked

@@ -196,8 +196,19 @@ function removeList(listName) {
 
     listTasks.forEach((task) => {
         const allTaskList = toDo.getList("All Tasks")
+        const todayList = toDo.getList("Today")
+        const thisWeekList = toDo.getList("This Week")
+
         if (allTaskList.contains(`${task.getName()} (${listName})`)) {
             removeTask("All Tasks", `${task.getName()} (${listName})`)
+        }
+
+        if (todayList.contains(`${task.getName()} (${listName})`)) {
+            removeTask("Today", `${task.getName()} (${listName})`)
+        }
+
+        if (thisWeekList.contains(`${task.getName()} (${listName})`)) {
+            removeTask("This Week", `${task.getName()} (${listName})`)
         }
     })
 

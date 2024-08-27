@@ -377,6 +377,17 @@ function renderTasks() {
 function removeTask(listName, taskName) {
     const selectedList = toDo.getList(listName)
     selectedList.deleteTask(taskName)
+
+    const allTaskList = toDo.getList("All Tasks")
+    allTaskList.deleteTask(`${taskName} (${listName})`)
+
+    const todayList = toDo.getList("Today")
+    todayList.deleteTask(`${taskName} (${listName})`)
+
+    const thisWeekList = toDo.getList("This Week")
+    thisWeekList.deleteTask(`${taskName} (${listName})`)
+
+    console.log(toDo.getLists())
 }
 
 function initialLoad() {

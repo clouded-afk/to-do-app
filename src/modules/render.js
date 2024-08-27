@@ -234,8 +234,8 @@ function populateEditTaskForm(taskName) {
 
 // Saves task after Edits
 function saveEditedTask() {
+    // For User Created Lists
     const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
-
     const selectedTask = currentList.getTask(currentTask)
 
     const editedName = document.getElementById("edit-task-name").value 
@@ -247,6 +247,15 @@ function saveEditedTask() {
     selectedTask.setDescription(editedDescription)
     selectedTask.setDueDate(editedDueDate)
     selectedTask.setPriority(editedPriority)
+
+    // For All Tasks List
+    const allTaskList = toDo.getList("All Tasks")
+    const selectedAllTask = allTaskList.getTask(`${currentTask} (${currentList.getName()})`)
+
+    selectedAllTask.setName(`${editedName} (${currentList.getName()})`)
+    selectedAllTask.setDescription(editedDescription)
+    selectedAllTask.setDueDate(editedDueDate)
+    selectedAllTask.setPriority(editedPriority)
 }
 
 // Removes the original task container, and replaces it with the edited version

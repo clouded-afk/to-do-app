@@ -191,6 +191,16 @@ function addNewList() {
 
 // Removes list from lists array in toDo object
 function removeList(listName) {
+    const deletedList = toDo.getList(listName)
+    const listTasks = deletedList.getTasks()
+
+    listTasks.forEach((task) => {
+        const allTaskList = toDo.getList("All Tasks")
+        if (allTaskList.contains(`${task.getName()} (${listName})`)) {
+            removeTask("All Tasks", `${task.getName()} (${listName})`)
+        }
+    })
+
     toDo.deleteList(listName)
 }
 

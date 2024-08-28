@@ -18,6 +18,7 @@ function addEventHandlers() {
         listDialog.style.display = "flex"
         taskDialog.style.display = "none"
         editTaskDialog.style.display = "none"
+        clearForm()
         buttonDisabler(true)
     })
 
@@ -34,7 +35,6 @@ function addEventHandlers() {
 
     listSubmit.addEventListener("click", (e) => {
         e.preventDefault()
-        listDialog.style.display = "none"
         addNewList()
         buttonDisabler(false)
         console.log(toDo.getLists())
@@ -147,6 +147,29 @@ function addNewList() {
     const delButton = document.createElement("button")
     delButton.classList.add("list-delete")
     delButton.innerHTML += `<i class="fa-solid fa-trash-can"></i>`
+
+    const existingLists = toDo.getLists()
+    const errorMessage = document.querySelector(".list-name-error")
+    const listDialog = document.querySelector(".list-dialog")
+
+    // Validates list name so it is not empty and is unqiue
+    if (existingLists.includes(toDo.getList(listName.value))) {
+        listName.style.border = "2px solid red"
+        errorMessage.textContent = "Name Must Be Unique"
+        errorMessage.style.display = "flex"
+    } else if (listName.value === ""){
+        listName.style.border = "2px solid red"
+        errorMessage.textContent = "Name Must Not Be Empty"
+        errorMessage.style.display = "flex"
+    } else {
+        toDo.addList(new List(listName.value))
+        listElement.appendChild(listButton)
+        listElement.appendChild(delButton)
+        myListSection.appendChild(listElement)
+        listDialog.style.display = "none"
+        errorMessage.style.display = "none"
+        listName.style.border = ""
+    }
 
     const headerText = document.querySelector(".content-header-text")
     const myListButton = document.querySelectorAll(".my-list-button")
@@ -449,6 +472,12 @@ function removeTask(listName, taskName) {
     thisWeekList.deleteTask(`${taskName} (${listName})`)
 
     console.log(toDo.getLists())
+}
+
+function clearForm() {
+    const listNameInput = document.getElementById("list-name-input")
+
+    listNameInput.value = ""
 }
 
 function initialLoad() {

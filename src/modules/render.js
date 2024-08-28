@@ -148,18 +148,6 @@ function addNewList() {
     delButton.classList.add("list-delete")
     delButton.innerHTML += `<i class="fa-solid fa-trash-can"></i>`
 
-    const existingLists = toDo.getLists()
-
-    if (existingLists.includes(toDo.getList(listName.value))) {
-        alert("List name must be unique, Please enter a different name!")
-        return
-    } else {
-        toDo.addList(new List(listName.value))
-        listElement.appendChild(listButton)
-        listElement.appendChild(delButton)
-        myListSection.appendChild(listElement)
-    }
-
     const headerText = document.querySelector(".content-header-text")
     const myListButton = document.querySelectorAll(".my-list-button")
     const newTaskButton = document.querySelector(".new-task-button")

@@ -527,12 +527,10 @@ function clearTaskForm() {
     const taskName = document.getElementById("task-name-input")
     const taskDescription = document.getElementById("task-description-input")
     const taskDueDate = document.getElementById("task-due-date")
-    const taskPriority =  document.getElementById("task-priority")
 
     taskName.value = ""
     taskDescription.value = ""
     taskDueDate.value = ""
-    taskPriority.value = ""
 }
 
 function initialLoad() {

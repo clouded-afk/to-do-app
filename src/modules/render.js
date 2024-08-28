@@ -18,7 +18,7 @@ function addEventHandlers() {
         listDialog.style.display = "flex"
         taskDialog.style.display = "none"
         editTaskDialog.style.display = "none"
-        clearForm()
+        clearListForm()
         buttonDisabler(true)
     })
 
@@ -26,6 +26,7 @@ function addEventHandlers() {
         taskDialog.style.display = "flex"
         listDialog.style.display = "none"
         editTaskDialog.style.display = "none"
+        clearTaskForm()
         buttonDisabler(true)
     })
 
@@ -132,12 +133,12 @@ function buttonDisabler(disable) {
     })
 }
 
+// Validates list name so it is not empty and is unqiue, this is only for the initial opening of the form, otherwise it is handled in the addNewList function
 function validateListForm() {
     const listName = document.getElementById("list-name-input")
     const existingLists = toDo.getLists()
     const errorMessage = document.querySelector(".list-name-error")
 
-    // Validates list name so it is not empty and is unqiue
     listName.addEventListener("input", function() {
         if (existingLists.includes(toDo.getList(listName.value))) {
             listName.style.border = "2px solid red"
@@ -517,9 +518,21 @@ function removeTask(listName, taskName) {
     console.log(toDo.getLists())
 }
 
-function clearForm() {
+function clearListForm() {
     const listNameInput = document.getElementById("list-name-input")
     listNameInput.value = ""
+}
+
+function clearTaskForm() {
+    const taskName = document.getElementById("task-name-input")
+    const taskDescription = document.getElementById("task-description-input")
+    const taskDueDate = document.getElementById("task-due-date")
+    const taskPriority =  document.getElementById("task-priority")
+
+    taskName.value = ""
+    taskDescription.value = ""
+    taskDueDate.value = ""
+    taskPriority.value = ""
 }
 
 function initialLoad() {

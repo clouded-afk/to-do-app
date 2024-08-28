@@ -63,7 +63,7 @@
 
                 <label for="list-name-input">List Name:</label>
                 <input type="text" id="list-name-input" name="list-name-input">
-                <div class="list-name-error" style="color: red;">Steve</div>
+                <div class="list-name-error" style="color: red;"></div>
 
                 <button type="submit" id="list-submit">Submit</button>
 
@@ -77,12 +77,15 @@
 
                 <label for="task-name-input" class="task-label">Task Name:</label>
                 <input type="text" id="task-name-input" name="task-name-input">
+                <div class="task-name-error" style="color: red;"></div>
     
                 <label for="task-description-input" class="task-label">Description:</label>
                 <textarea id="task-description-input" name="task-description-input" maxlength="250" placeholder="Max Character Count = 250"></textarea>
+                <div class="task-desc-error" style="color: red;"></div>
     
                 <label for="task-due-date" class="task-label">Due Date:</label>
                 <input type="date" id="task-due-date" name="task-due-date">
+                <div class="task-date-error" style="color: red;"></div>
     
                 <label for="task-priority" class="task-label">Priority:</label>
                 <select id="task-priority" name="task-priority">
@@ -90,6 +93,7 @@
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select>
+                <div class="task-priority-error" style="color: red;"></div>
 
                 <button type="submit" id="task-submit">Submit</button>
 

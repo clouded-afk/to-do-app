@@ -327,6 +327,18 @@ li {
     border: none;
 }
 
+.list-name-error {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 20px;
+    font-size: 14px;
+    font-style: italic;
+    letter-spacing: .3ch;
+}
+
 #list-submit, .list-close, #task-submit, .task-close, .task-save, .close-edit-task {
     color: white;
     font-size: 18px;

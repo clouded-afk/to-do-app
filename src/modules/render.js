@@ -132,6 +132,36 @@ function buttonDisabler(disable) {
     })
 }
 
+function validateListForm() {
+    const listName = document.getElementById("list-name-input")
+    const existingLists = toDo.getLists()
+    const errorMessage = document.querySelector(".list-name-error")
+
+    // Validates list name so it is not empty and is unqiue
+    listName.addEventListener("input", function() {
+        if (existingLists.includes(toDo.getList(listName.value))) {
+            listName.style.border = "2px solid red"
+            errorMessage.textContent = "Name Must Be Unique"
+            errorMessage.style.display = "flex"
+        } else if (listName.value === "") {
+            listName.style.border = "2px solid red"
+            errorMessage.textContent = "Name Must Not Be Empty"
+            errorMessage.style.display = "flex"
+        } else {
+            listName.style.border = ""
+            errorMessage.style.display = "none"
+        }
+    })
+    
+    listName.addEventListener("focus", function() {
+        if (listName.style.border === "2px solid red") {
+            this.style.outlineColor = "red"
+        } else {
+            this.style.outlineColor = "black"
+        }
+    })
+}
+
 // adds list button to the page and pushes that list into the lists array of the ToDoList object
 function addNewList() {
     const myListSection = document.querySelector(".my-lists")
@@ -153,22 +183,35 @@ function addNewList() {
     const listDialog = document.querySelector(".list-dialog")
 
     // Validates list name so it is not empty and is unqiue
-    if (existingLists.includes(toDo.getList(listName.value))) {
-        listName.style.border = "2px solid red"
-        errorMessage.textContent = "Name Must Be Unique"
-        errorMessage.style.display = "flex"
-    } else if (listName.value === ""){
-        listName.style.border = "2px solid red"
-        errorMessage.textContent = "Name Must Not Be Empty"
-        errorMessage.style.display = "flex"
-    } else {
+    listName.addEventListener("input", function() {
+        if (existingLists.includes(toDo.getList(listName.value))) {
+            listName.style.border = "2px solid red"
+            errorMessage.textContent = "Name Must Be Unique"
+            errorMessage.style.display = "flex"
+        } else if (listName.value === "") {
+            listName.style.border = "2px solid red"
+            errorMessage.textContent = "Name Must Not Be Empty"
+            errorMessage.style.display = "flex"
+        } else {
+            listName.style.border = ""
+            errorMessage.style.display = "none"
+        }
+    })
+    
+    listName.addEventListener("focus", function() {
+        if (listName.style.border === "2px solid red") {
+            this.style.outlineColor = "red"
+        } else {
+            this.style.outlineColor = "black"
+        }
+    })
+    
+    if (listName.value !== "" && !existingLists.includes(toDo.getList(listName.value))) {
         toDo.addList(new List(listName.value))
         listElement.appendChild(listButton)
         listElement.appendChild(delButton)
         myListSection.appendChild(listElement)
         listDialog.style.display = "none"
-        errorMessage.style.display = "none"
-        listName.style.border = ""
     }
 
     const headerText = document.querySelector(".content-header-text")
@@ -476,12 +519,12 @@ function removeTask(listName, taskName) {
 
 function clearForm() {
     const listNameInput = document.getElementById("list-name-input")
-
     listNameInput.value = ""
 }
 
 function initialLoad() {
     addEventHandlers()
+    validateListForm()
 }
 
 export {

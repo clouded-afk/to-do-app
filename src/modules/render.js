@@ -588,6 +588,10 @@ function removeTask(listName, taskName) {
 function clearListForm() {
     const listNameInput = document.getElementById("list-name-input")
     listNameInput.value = ""
+    listNameInput.style.border = ""
+    
+    const errorMessage = document.querySelector(".list-name-error")
+    errorMessage.style.display = "none"
 }
 
 function clearTaskForm() {

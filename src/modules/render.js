@@ -38,7 +38,6 @@ function addEventHandlers() {
         e.preventDefault()
         addNewList()
         buttonDisabler(false)
-        console.log(toDo.getLists())
     })
 
     listClose.addEventListener("click", () => {
@@ -52,9 +51,7 @@ function addEventHandlers() {
 
     taskSubmit.addEventListener("click", (e) => {
         e.preventDefault()
-        taskDialog.style.display = "none"
         addNewTask()
-        renderTasks()
         buttonDisabler(false)
     })
 
@@ -284,10 +281,80 @@ function addNewTask() {
 
     const currentList = toDo.getList(headerText.textContent)
 
-    currentList.addTask(newTask)
-    toDo.addToAllTaskList()
-    toDo.addToTodayList()
-    toDo.addToThisWeekList()
+    const currentListTasks = currentList.getTasks()
+
+    //validator
+    const taskDialog = document.querySelector(".task-dialog")
+    const nameError = document.querySelector(".task-name-error")
+
+    taskName.addEventListener("input", function() {
+        if (currentListTasks.includes(currentList.getTask(taskName.value))) {
+            taskName.style.border = "2px solid red"
+            nameError.textContent = "Name Must Be Unique in this List"
+            nameError.style.display = "flex"
+        } else if (taskName.value === "") {
+            taskName.style.border = "2px solid red"
+            nameError.textContent = "Name Must Not Be Empty"
+            nameError.style.display = "flex"
+        } else {
+            taskName.style.border = ""
+            nameError.style.display = "none"
+        }
+    })
+
+    taskName.addEventListener("focus", function() {
+        if (taskName.style.border === "2px solid red") {
+            this.style.outlineColor = "red"
+        } else {
+            this.style.outlineColor = "black"
+        }
+    })
+
+    if (taskName.value !== "" && !currentListTasks.includes(currentList.getTask(taskName.value))) {
+        currentList.addTask(newTask)
+        toDo.addToAllTaskList()
+        toDo.addToTodayList()
+        toDo.addToThisWeekList()
+        taskDialog.style.display = "none"
+        renderTasks()
+    }
+}
+
+function validateTaskForm() {
+    const headerText = document.querySelector(".content-header-text")
+    const taskName = document.getElementById("task-name-input")
+    const taskDescription = document.getElementById("task-description-input")
+    const taskDueDate = document.getElementById("task-due-date")
+    const taskPriority =  document.getElementById("task-priority")
+
+    const currentList = toDo.getList(headerText.textContent)
+    const currentListTasks = currentList.getTasks()
+
+    //for task name
+    const nameError = document.querySelector(".task-name-error")
+
+    taskName.addEventListener("input", function() {
+        if (currentListTasks.includes(currentList.getTask(taskName.value))) {
+            taskName.style.border = "2px solid red"
+            nameError.textContent = "Name Must Be Unique in this List"
+            nameError.style.display = "flex"
+        } else if (taskName.value === "") {
+            taskName.style.border = "2px solid red"
+            nameError.textContent = "Name Must Not Be Empty"
+            nameError.style.display = "flex"
+        } else {
+            taskName.style.border = ""
+            nameError.style.display = "none"
+        }
+    })
+
+    taskName.addEventListener("focus", function() {
+        if (taskName.style.border === "2px solid red") {
+            this.style.outlineColor = "red"
+        } else {
+            this.style.outlineColor = "black"
+        }
+    })
 }
 
 // Populate Edit Task form with correct data based on selected task to edit

@@ -130,18 +130,19 @@ function buttonDisabler(disable) {
     })
 }
 
-// Validates list name so it is not empty and is unqiue, this is only for the initial opening of the form, otherwise it is handled in the addNewList function
+// Validates list name so it is not empty and is unqiue
 function validateListForm() {
     const listName = document.getElementById("list-name-input")
     const existingLists = toDo.getLists()
     const errorMessage = document.querySelector(".list-name-error")
 
     listName.addEventListener("input", function() {
-        if (existingLists.includes(toDo.getList(listName.value))) {
+        const trimmedValue = listName.value.trim()
+        if (existingLists.includes(toDo.getList(trimmedValue))) {
             listName.style.border = "2px solid red"
             errorMessage.textContent = "Name Must Be Unique"
             errorMessage.style.display = "flex"
-        } else if (listName.value === "") {
+        } else if (trimmedValue === "") {
             listName.style.border = "2px solid red"
             errorMessage.textContent = "Name Must Not Be Empty"
             errorMessage.style.display = "flex"
@@ -177,39 +178,17 @@ function addNewList() {
     delButton.innerHTML += `<i class="fa-solid fa-trash-can"></i>`
 
     const existingLists = toDo.getLists()
-    const errorMessage = document.querySelector(".list-name-error")
     const listDialog = document.querySelector(".list-dialog")
 
-    // Validates list name so it is not empty and is unqiue
-    listName.addEventListener("input", function() {
-        if (existingLists.includes(toDo.getList(listName.value))) {
-            listName.style.border = "2px solid red"
-            errorMessage.textContent = "Name Must Be Unique"
-            errorMessage.style.display = "flex"
-        } else if (listName.value === "") {
-            listName.style.border = "2px solid red"
-            errorMessage.textContent = "Name Must Not Be Empty"
-            errorMessage.style.display = "flex"
-        } else {
-            listName.style.border = ""
-            errorMessage.style.display = "none"
-        }
-    })
-    
-    listName.addEventListener("focus", function() {
-        if (listName.style.border === "2px solid red") {
-            this.style.outlineColor = "red"
-        } else {
-            this.style.outlineColor = "black"
-        }
-    })
-    
+    // Validates list name so it is not empty and is unique, adds the new task if all conditions are satisfied in the validation function
     if (listName.value !== "" && !existingLists.includes(toDo.getList(listName.value))) {
         toDo.addList(new List(listName.value))
         listElement.appendChild(listButton)
         listElement.appendChild(delButton)
         myListSection.appendChild(listElement)
         listDialog.style.display = "none"
+    } else {
+        validateListForm()
     }
 
     const headerText = document.querySelector(".content-header-text")
@@ -267,6 +246,9 @@ function removeList(listName) {
     toDo.deleteList(listName)
 }
 
+function validateTaskForm() {
+
+}
 
 // Add task to the tasks array of the current list object selected | Pushes all newly created tasks to all task list
 function addNewTask() {
@@ -281,80 +263,19 @@ function addNewTask() {
 
     const currentList = toDo.getList(headerText.textContent)
 
-    const currentListTasks = currentList.getTasks()
-
     //validator
     const taskDialog = document.querySelector(".task-dialog")
-    const nameError = document.querySelector(".task-name-error")
 
-    taskName.addEventListener("input", function() {
-        if (currentListTasks.includes(currentList.getTask(taskName.value))) {
-            taskName.style.border = "2px solid red"
-            nameError.textContent = "Name Must Be Unique in this List"
-            nameError.style.display = "flex"
-        } else if (taskName.value === "") {
-            taskName.style.border = "2px solid red"
-            nameError.textContent = "Name Must Not Be Empty"
-            nameError.style.display = "flex"
-        } else {
-            taskName.style.border = ""
-            nameError.style.display = "none"
-        }
-    })
-
-    taskName.addEventListener("focus", function() {
-        if (taskName.style.border === "2px solid red") {
-            this.style.outlineColor = "red"
-        } else {
-            this.style.outlineColor = "black"
-        }
-    })
-
-    if (taskName.value !== "" && !currentListTasks.includes(currentList.getTask(taskName.value))) {
+    if (taskName.value !== "" && !currentList.contains(taskName.value)) {
         currentList.addTask(newTask)
         toDo.addToAllTaskList()
         toDo.addToTodayList()
         toDo.addToThisWeekList()
         taskDialog.style.display = "none"
         renderTasks()
+    } else {
+        validateTaskForm()
     }
-}
-
-function validateTaskForm() {
-    const headerText = document.querySelector(".content-header-text")
-    const taskName = document.getElementById("task-name-input")
-    const taskDescription = document.getElementById("task-description-input")
-    const taskDueDate = document.getElementById("task-due-date")
-    const taskPriority =  document.getElementById("task-priority")
-
-    const currentList = toDo.getList(headerText.textContent)
-    const currentListTasks = currentList.getTasks()
-
-    //for task name
-    const nameError = document.querySelector(".task-name-error")
-
-    taskName.addEventListener("input", function() {
-        if (currentListTasks.includes(currentList.getTask(taskName.value))) {
-            taskName.style.border = "2px solid red"
-            nameError.textContent = "Name Must Be Unique in this List"
-            nameError.style.display = "flex"
-        } else if (taskName.value === "") {
-            taskName.style.border = "2px solid red"
-            nameError.textContent = "Name Must Not Be Empty"
-            nameError.style.display = "flex"
-        } else {
-            taskName.style.border = ""
-            nameError.style.display = "none"
-        }
-    })
-
-    taskName.addEventListener("focus", function() {
-        if (taskName.style.border === "2px solid red") {
-            this.style.outlineColor = "red"
-        } else {
-            this.style.outlineColor = "black"
-        }
-    })
 }
 
 // Populate Edit Task form with correct data based on selected task to edit
@@ -607,6 +528,7 @@ function clearTaskForm() {
 function initialLoad() {
     addEventHandlers()
     validateListForm()
+    validateTaskForm()
 }
 
 export {

@@ -283,6 +283,28 @@ function validateTaskForm() {
             descError.style.display = "none"
         }
     })
+
+    const taskDate = document.getElementById("task-due-date")
+    const dateError = document.querySelector(".task-date-error")
+
+    taskDate.addEventListener("input", function() {
+        const selectedDate = new Date(taskDate.value)
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+
+        if (!taskDate.value) {
+            taskDate.style.border = "2px solid red"
+            dateError.textContent = "You Must Select a Date"
+            dateError.style.display = "block"
+        } else if (selectedDate < today) {
+            taskDate.style.border = "2px solid red"
+            dateError.textContent = "You Must Select A Valid Date"
+            dateError.style.display = "block"
+        } else {
+            taskDate.style.border = ""
+            dateError.style.display = "none"
+        }
+    })
 }
 
 // Add task to the tasks array of the current list object selected | Pushes all newly created tasks to all task list

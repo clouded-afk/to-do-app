@@ -313,7 +313,7 @@ function saveEditedTask() {
     const todayList = toDo.getList("Today")
     const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
     const todaysDate = new Date()
-
+    
     if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
         if (editedDueDate !== todaysDate) {
             removeTask("Today", `${currentTask} (${currentList.getName()})`)
@@ -323,7 +323,7 @@ function saveEditedTask() {
             selectedTodayTask.setDueDate(editedDueDate)
             selectedTodayTask.setPriority(editedPriority)
         }
-    } else if (editedDueDate === todaysDate){
+    } else {
         toDo.addToTodayList()
     }
 

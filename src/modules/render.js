@@ -248,8 +248,8 @@ function removeList(listName) {
 
 function validateTaskForm() {
     const headerText = document.querySelector(".content-header-text")
-    const taskName = document.getElementById("task-name-input")
 
+    const taskName = document.getElementById("task-name-input")
     const nameError = document.querySelector(".task-name-error")
 
     taskName.addEventListener("input", function() {
@@ -266,6 +266,21 @@ function validateTaskForm() {
         } else {
             taskName.style.border = ""
             nameError.style.display = "none"
+        }
+    })
+
+    const taskDescription = document.getElementById("task-description-input")
+    const descError = document.querySelector(".task-desc-error")
+
+    taskDescription.addEventListener("input", function() {
+        const trimmedDesc = taskDescription.value.trim()
+        if (trimmedDesc === "") {
+            taskDescription.style.border = "2px solid red"
+            descError.textContent = "Description Must Not Be Empty"
+            descError.style.display = "block"
+        } else {
+            taskDescription.style.border = ""
+            descError.style.display = "none"
         }
     })
 }

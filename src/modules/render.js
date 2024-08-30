@@ -290,13 +290,13 @@ function validateTaskForm() {
     taskDate.addEventListener("input", function() {
         const selectedDate = new Date(taskDate.value)
         const today = new Date()
-        today.setHours(0,0,0,0)
+        const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
 
         if (!taskDate.value) {
             taskDate.style.border = "2px solid red"
             dateError.textContent = "You Must Select a Date"
             dateError.style.display = "block"
-        } else if (selectedDate.getTime() < today.getTime()) {
+        } else if (updatedDateSelection < today){
             taskDate.style.border = "2px solid red"
             dateError.textContent = "You Must Select A Valid Date"
             dateError.style.display = "block"
@@ -304,9 +304,6 @@ function validateTaskForm() {
             taskDate.style.border = ""
             dateError.style.display = "none"
         }
-
-        console.log(today.getTime())
-        console.log(selectedDate.getTime())
     })
 }
 
@@ -323,7 +320,11 @@ function addNewTask() {
     const currentList = toDo.getList(headerText.textContent)
     const taskDialog = document.querySelector(".task-dialog")
 
-    if (taskName.value !== "" && !currentList.contains(taskName.value) && taskDescription.value !== "" && taskDueDate.value !== "") {
+    const selectedDate = new Date(taskDueDate.value)
+    const today = new Date()
+    const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
+    
+    if (taskName.value !== "" && !currentList.contains(taskName.value) && taskDescription.value !== "" && taskDueDate.value && updatedDateSelection >= today) {
         currentList.addTask(newTask)
         toDo.addToAllTaskList()
         toDo.addToTodayList()

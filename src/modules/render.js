@@ -50,6 +50,7 @@ function addEventHandlers() {
     const taskClose = document.querySelector(".task-close")
 
     taskSubmit.addEventListener("click", (e) => {
+        taskDialog.style.display = "none"
         e.preventDefault()
         addNewTask()
         buttonDisabler(false)
@@ -246,10 +247,6 @@ function removeList(listName) {
     toDo.deleteList(listName)
 }
 
-function validateTaskForm() {
-
-}
-
 // Add task to the tasks array of the current list object selected | Pushes all newly created tasks to all task list
 function addNewTask() {
     const taskName = document.getElementById("task-name-input")
@@ -260,22 +257,12 @@ function addNewTask() {
     const newTask = new Task(taskName.value, taskDescription.value, taskDueDate.value, taskPriority.value)
 
     const headerText = document.querySelector(".content-header-text")
-
     const currentList = toDo.getList(headerText.textContent)
 
-    //validator
-    const taskDialog = document.querySelector(".task-dialog")
-
-    if (taskName.value !== "" && !currentList.contains(taskName.value)) {
-        currentList.addTask(newTask)
-        toDo.addToAllTaskList()
-        toDo.addToTodayList()
-        toDo.addToThisWeekList()
-        taskDialog.style.display = "none"
-        renderTasks()
-    } else {
-        validateTaskForm()
-    }
+    currentList.addTask(newTask)
+    toDo.addToAllTaskList()
+    toDo.addToTodayList()
+    toDo.addToThisWeekList()
 }
 
 // Populate Edit Task form with correct data based on selected task to edit
@@ -324,7 +311,7 @@ function saveEditedTask() {
     // For Today List
     const todayList = toDo.getList("Today")
     const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
-    const todaysDate = new Date().toISOString().split('T')[0];
+    const todaysDate = new Date().toISOString().split('T')[0]
 
     if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
         if (editedDueDate !== todaysDate) {
@@ -362,7 +349,6 @@ function saveEditedTask() {
             removeTask("This Week", `${currentTask} (${currentList.getName()})`)
         }
     }
-
 }
 
 // Removes the original task container, and replaces it with the edited version
@@ -528,7 +514,6 @@ function clearTaskForm() {
 function initialLoad() {
     addEventHandlers()
     validateListForm()
-    validateTaskForm()
 }
 
 export {

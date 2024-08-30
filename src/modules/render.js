@@ -254,11 +254,12 @@ function validateTaskForm() {
 
     taskName.addEventListener("input", function() {
         const currentList = toDo.getList(headerText.textContent)
-        if (taskName.value === "") {
+        const trimmedName = taskName.value.trim()
+        if (trimmedName === "") {
             taskName.style.border = "2px solid red"
             nameError.textContent = "Name Must Not Be Empty"
             nameError.style.display = "block"
-        } else if (currentList.contains(taskName.value)){
+        } else if (currentList.contains(trimmedName)){
             taskName.style.border = "2px solid red"
             nameError.textContent = "Name Must Be Unique To This List"
             nameError.style.display = "block"
@@ -545,6 +546,7 @@ function clearTaskForm() {
 function initialLoad() {
     addEventHandlers()
     validateListForm()
+    validateTaskForm()
 }
 
 export {

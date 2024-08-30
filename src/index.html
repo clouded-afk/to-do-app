@@ -76,15 +76,15 @@
             <form class="task-form" autocomplete="off">
 
                 <label for="task-name-input" class="task-label">Task Name:</label>
-                <input type="text" id="task-name-input" name="task-name-input">
+                <input type="text" id="task-name-input" name="task-name-input" required>
                 <div class="task-name-error" style="color: red;"></div>
     
                 <label for="task-description-input" class="task-label">Description:</label>
-                <textarea id="task-description-input" name="task-description-input" maxlength="250" placeholder="Max Character Count = 250"></textarea>
+                <textarea id="task-description-input" name="task-description-input" maxlength="250" placeholder="Max Character Count = 250" required></textarea>
                 <div class="task-desc-error" style="color: red;"></div>
     
                 <label for="task-due-date" class="task-label">Due Date:</label>
-                <input type="date" id="task-due-date" name="task-due-date">
+                <input type="date" id="task-due-date" name="task-due-date" required>
                 <div class="task-date-error" style="color: red;"></div>
     
                 <label for="task-priority" class="task-label">Priority:</label>

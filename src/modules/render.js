@@ -263,6 +263,7 @@ function addNewTask() {
     toDo.addToAllTaskList()
     toDo.addToTodayList()
     toDo.addToThisWeekList()
+    renderTasks()
 }
 
 // Populate Edit Task form with correct data based on selected task to edit
@@ -311,7 +312,7 @@ function saveEditedTask() {
     // For Today List
     const todayList = toDo.getList("Today")
     const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
-    const todaysDate = new Date().toISOString().split('T')[0]
+    const todaysDate = new Date()
 
     if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
         if (editedDueDate !== todaysDate) {
@@ -331,9 +332,8 @@ function saveEditedTask() {
     const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList.getName()})`)
 
     const editedDate = new Date(editedDueDate)
-    const currentDate = new Date()
-    const startOfWeek = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()))
-    const endOfWeek = new Date(currentDate.setDate(startOfWeek.getDate() + 6))
+    const startOfWeek = new Date(todaysDate.setDate(todaysDate.getDate() - todaysDate.getDay()))
+    const endOfWeek = new Date(todaysDate.setDate(startOfWeek.getDate() + 6))
 
     if (editedDate >= startOfWeek && editedDate <= endOfWeek) {
         if (selectedThisWeekTask) {

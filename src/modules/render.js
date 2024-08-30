@@ -577,12 +577,20 @@ function clearTaskForm() {
     const taskDueDate = document.getElementById("task-due-date")
 
     const nameError = document.querySelector(".task-name-error")
+    const descError = document.querySelector(".task-desc-error")
+    const dateError = document.querySelector(".task-date-error")
 
     taskName.value = ""
+    taskName.style.border = ""
     nameError.style.display = "none"
 
     taskDescription.value = ""
+    taskDescription.style.border = ""
+    descError.style.display = "none"
+
     taskDueDate.value = ""
+    taskDueDate.style.border = ""
+    dateError.style.display = "none"
 }
 
 function initialLoad() {

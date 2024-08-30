@@ -6,6 +6,7 @@ const toDo = new ToDoList();
 let currentTask;
 
 function addEventHandlers() {
+    const headerText = document.querySelector(".content-header-text")
     const listDialog = document.querySelector(".list-dialog")
     const taskDialog = document.querySelector(".task-dialog")
     const editTaskDialog = document.querySelector(".edit-task-dialog")
@@ -50,7 +51,6 @@ function addEventHandlers() {
     const taskClose = document.querySelector(".task-close")
 
     taskSubmit.addEventListener("click", (e) => {
-        taskDialog.style.display = "none"
         e.preventDefault()
         addNewTask()
         buttonDisabler(false)
@@ -79,7 +79,6 @@ function addEventHandlers() {
     })
 
     //for my task buttons 
-    const headerText = document.querySelector(".content-header-text")
     const myTaskButton = document.querySelectorAll(".my-task-button")
     const contentLine = document.querySelector(".line-div-content")
 
@@ -247,6 +246,29 @@ function removeList(listName) {
     toDo.deleteList(listName)
 }
 
+function validateTaskForm() {
+    const headerText = document.querySelector(".content-header-text")
+    const taskName = document.getElementById("task-name-input")
+
+    const nameError = document.querySelector(".task-name-error")
+
+    taskName.addEventListener("input", function() {
+        const currentList = toDo.getList(headerText.textContent)
+        if (taskName.value === "") {
+            taskName.style.border = "2px solid red"
+            nameError.textContent = "Name Must Not Be Empty"
+            nameError.style.display = "block"
+        } else if (currentList.contains(taskName.value)){
+            taskName.style.border = "2px solid red"
+            nameError.textContent = "Name Must Be Unique To This List"
+            nameError.style.display = "block"
+        } else {
+            taskName.style.border = ""
+            nameError.style.display = "none"
+        }
+    })
+}
+
 // Add task to the tasks array of the current list object selected | Pushes all newly created tasks to all task list
 function addNewTask() {
     const taskName = document.getElementById("task-name-input")
@@ -258,12 +280,17 @@ function addNewTask() {
 
     const headerText = document.querySelector(".content-header-text")
     const currentList = toDo.getList(headerText.textContent)
+    const taskDialog = document.querySelector(".task-dialog")
 
-    currentList.addTask(newTask)
-    toDo.addToAllTaskList()
-    toDo.addToTodayList()
-    toDo.addToThisWeekList()
-    renderTasks()
+    if (taskName.value !== "" && !currentList.contains(taskName.value)) {
+        currentList.addTask(newTask)
+        toDo.addToAllTaskList()
+        toDo.addToTodayList()
+        toDo.addToThisWeekList()
+        renderTasks()
+        taskDialog.style.display = "none"
+    }
+    validateTaskForm()
 }
 
 // Populate Edit Task form with correct data based on selected task to edit
@@ -506,7 +533,11 @@ function clearTaskForm() {
     const taskDescription = document.getElementById("task-description-input")
     const taskDueDate = document.getElementById("task-due-date")
 
+    const nameError = document.querySelector(".task-name-error")
+
     taskName.value = ""
+    nameError.style.display = "none"
+
     taskDescription.value = ""
     taskDueDate.value = ""
 }

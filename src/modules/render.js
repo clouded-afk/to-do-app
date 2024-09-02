@@ -396,6 +396,9 @@ function validateEditTaskForm() {
             editedName.style.border = "2px solid red"
             editedNameError.textContent = "Name Must Not Be Empty"
             editedNameError.style.display = "block"
+        } else {
+            editedName.style.border = ""
+            editedNameError.style.display = "none"
         }
     })
 }
@@ -411,12 +414,15 @@ function saveEditedTask() {
     const editedDueDate = document.getElementById("edit-due-date").value
     const editedPriority = document.getElementById("edit-priority").value
 
+    const editTaskDialog = document.querySelector(".edit-task-dialog")
+
     if (editedName !== "" && !currentList.contains(editedName)) {
         selectedTask.setName(editedName)
         selectedTask.setDescription(editedDescription)
         selectedTask.setDueDate(editedDueDate)
         selectedTask.setPriority(editedPriority)
 
+        editTaskDialog.style.display = "none"
         renderTaskEdits()
     } else {
         validateEditTaskForm()
@@ -593,6 +599,7 @@ function renderTasks() {
             editTaskDialog.style.display = "flex"
             buttonDisabler(true)
             populateEditTaskForm(selectedTask)
+            clearEditTaskForm()
         })
     })
 }
@@ -645,10 +652,30 @@ function clearTaskForm() {
     dateError.style.display = "none"
 }
 
+function clearEditTaskForm() {
+    const editedName = document.getElementById("edit-task-name") 
+    const editedDescription = document.getElementById("edit-description")
+    const editedDueDate = document.getElementById("edit-due-date")
+
+    const nameError = document.querySelector(".edit-name-error")
+    const descError = document.querySelector(".edit-desc-error")
+    const dateError = document.querySelector(".edit-date-error")
+
+    editedName.style.border = ""
+    nameError.style.display = "none"
+
+    editedDescription.style.border = ""
+    descError.style.display = "none"
+
+    editedDueDate.style.border = ""
+    dateError.style.display = "none"
+}
+
 function initialLoad() {
     addEventHandlers()
     validateListForm()
     validateTaskForm()
+    validateEditTaskForm()
 }
 
 export {

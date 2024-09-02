@@ -89,11 +89,10 @@
     
                 <label for="task-priority" class="task-label">Priority:</label>
                 <select id="task-priority" name="task-priority">
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value="low" style="color: green;">Low</option>
+                    <option value="medium" style="color: orange;">Medium</option>
+                    <option value="high" style="color: red;">High</option>
                 </select>
-                <div class="task-priority-error" style="color: red;"></div>
 
                 <button type="submit" id="task-submit">Submit</button>
 
@@ -106,12 +105,15 @@
             <form class="edit-task-form">
                 <label for="edit-task-name" class="task-label">Task Name:</label>
                 <input type="text" id="edit-task-name" name="edit-task-name">
+                <div class="edit-name-error" style="color: red;"></div>
     
                 <label for="edit-description" class="task-label">Description:</label>
                 <textarea id="edit-description" name="edit-description" maxlength="250" placeholder="Max Character Count = 250"></textarea>
+                <div class="edit-desc-error" style="color: red;"></div>
     
                 <label for="edit-due-date" class="task-label">Due Date:</label>
                 <input type="date" id="edit-due-date" name="edit-due-date">
+                <div class="edit-date-error" style="color: red;"></div>
     
                 <label for="edit-priority" class="task-label">Priority:</label>
                 <select id="edit-priority" name="edit-priority">

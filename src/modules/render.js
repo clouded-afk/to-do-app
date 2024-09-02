@@ -69,7 +69,6 @@ function addEventHandlers() {
         editTaskDialog.style.display = "none"
         buttonDisabler(false)
         saveEditedTask()
-        renderTaskEdits()
         console.log(toDo.getLists())
     })
 
@@ -157,6 +156,18 @@ function validateListForm() {
             this.style.outlineColor = "red"
         } else {
             this.style.outlineColor = "black"
+        }
+    })
+
+    const submitButton = document.getElementById("list-submit") 
+
+    submitButton.addEventListener("click", (event) => {
+        event.preventDefault()
+        const trimmedValue = listName.value.trim()
+        if (trimmedValue === "") {
+            listName.style.border = "2px solid red"
+            errorMessage.textContent = "Name Must Not Be Empty"
+            errorMessage.style.display = "flex"
         }
     })
 }
@@ -354,6 +365,27 @@ function populateEditTaskForm(taskName) {
     currentTask = taskName
 }
 
+function validateEditTaskForm() {
+    const headerText = document.querySelector(".content-header-text")
+    const editedName = document.getElementById("edit-task-name") 
+    const editedNameError = document.querySelector(".edit-name-error")
+
+    editedName.addEventListener("input", function() {
+        const currentList = toDo.getList(headerText.textContent)
+        const trimmedEditedName = editedName.value.trim()
+
+        if (trimmedEditedName === "") {
+            editedName.style.border = "2px solid red"
+            editedNameError.textContent = "Name Must Not Be Empty"
+            editedNameError.style.display = "block"
+        } else if (currentList.contains(trimmedEditedName)) {
+            editedName.style.border = "2px solid red"
+            editedNameError.textContent = "Name Must Not Be Empty"
+            editedNameError.style.display = "block"
+        }
+    })
+}
+
 // Saves task after Edits
 function saveEditedTask() {
     // For User Created Lists
@@ -365,10 +397,16 @@ function saveEditedTask() {
     const editedDueDate = document.getElementById("edit-due-date").value
     const editedPriority = document.getElementById("edit-priority").value
 
-    selectedTask.setName(editedName)
-    selectedTask.setDescription(editedDescription)
-    selectedTask.setDueDate(editedDueDate)
-    selectedTask.setPriority(editedPriority)
+    if (editedName !== "" && !currentList.contains(editedName)) {
+        selectedTask.setName(editedName)
+        selectedTask.setDescription(editedDescription)
+        selectedTask.setDueDate(editedDueDate)
+        selectedTask.setPriority(editedPriority)
+
+        renderTaskEdits()
+    } else {
+        validateEditTaskForm()
+    }
 
     // For All Tasks List
     const allTaskList = toDo.getList("All Tasks")

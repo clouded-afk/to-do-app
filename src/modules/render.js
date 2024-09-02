@@ -387,14 +387,15 @@ function validateEditTaskForm() {
     editedName.addEventListener("input", function() {
         const currentList = toDo.getList(headerText.textContent)
         const trimmedEditedName = editedName.value.trim()
+        const currentTaskName = currentList.getTask(currentTask).getName()
 
         if (trimmedEditedName === "") {
             editedName.style.border = "2px solid red"
             editedNameError.textContent = "Name Must Not Be Empty"
             editedNameError.style.display = "block"
-        } else if (currentList.contains(trimmedEditedName)) {
+        } else if (currentList.contains(trimmedEditedName) && trimmedEditedName !== currentTaskName) {
             editedName.style.border = "2px solid red"
-            editedNameError.textContent = "Name Must Not Be Empty"
+            editedNameError.textContent = "Name Must Be Unique"
             editedNameError.style.display = "block"
         } else {
             editedName.style.border = ""

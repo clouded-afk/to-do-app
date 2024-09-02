@@ -150,17 +150,8 @@ function validateListForm() {
             errorMessage.style.display = "none"
         }
     })
-    
-    listName.addEventListener("focus", function() {
-        if (listName.style.border === "2px solid red") {
-            this.style.outlineColor = "red"
-        } else {
-            this.style.outlineColor = "black"
-        }
-    })
 
     const submitButton = document.getElementById("list-submit") 
-
     submitButton.addEventListener("click", (event) => {
         event.preventDefault()
         const trimmedValue = listName.value.trim()
@@ -314,6 +305,29 @@ function validateTaskForm() {
         } else {
             taskDate.style.border = ""
             dateError.style.display = "none"
+        }
+    })
+
+    const submitButton = document.getElementById("task-submit")
+
+    submitButton.addEventListener("click", (event) => {
+        event.preventDefault()
+        const trimmedName = taskName.value.trim()
+        const trimmedDesc = taskDescription.value.trim()
+        if (trimmedName === "") {
+            taskName.style.border = "2px solid red"
+            nameError.textContent = "Name Must Not Be Empty"
+            nameError.style.display = "block"
+        } 
+        if (trimmedDesc === "") {
+            taskDescription.style.border = "2px solid red"
+            descError.textContent = "Description Must Not Be Empty"
+            descError.style.display = "block"
+        }
+        if (!taskDate.value) {
+            taskDate.style.border = "2px solid red"
+            dateError.textContent = "You Must Select a Date"
+            dateError.style.display = "block"
         }
     })
 }

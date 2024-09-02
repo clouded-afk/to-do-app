@@ -402,6 +402,25 @@ function validateEditTaskForm() {
             editedNameError.style.display = "none"
         }
     })
+
+    const editedDescription = document.getElementById("edit-description")
+    const editedDescError = document.querySelector(".edit-desc-error")
+
+    editedDescription.addEventListener("input", function() {
+        const trimmedEditedDesc = editedDescription.value.trim()
+
+        if (trimmedEditedDesc === "") {
+            editedDescription.style.border = "2px solid red"
+            editedDescError.textContent = "Description Must Not Be Empty"
+            editedDescError.style.display = "block"
+        } else {
+            editedDescription.style.border = ""
+            editedDescError.style.display = "none"
+        }
+    })
+
+    const editedDueDate = document.getElementById("edit-due-date")
+    const editedDateError = document.querySelector(".edit-date-error")
 }
 
 // Saves task after Edits

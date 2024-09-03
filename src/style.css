@@ -428,7 +428,7 @@ label {
     margin: auto;
 }
 
-.task-name-error, .task-desc-error, .task-date-error {
+.task-name-error, .task-desc-error, .task-date-error, .edit-name-error, .edit-desc-error, .edit-date-error {
     margin-left: 100px;
     font-size: 12px;
     letter-spacing: .25ch;

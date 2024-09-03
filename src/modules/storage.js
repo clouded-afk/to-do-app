@@ -7,13 +7,26 @@ export default class Storage {
         localStorage.setItem("toDo", JSON.stringify(data))
     }
 
-    getToDoList() {
-        const toDO = Object.assign(new ToDoList(), JSON.parse(localStorage.getItem("toDo")))
+    getToDo() {
+        const toDo = Object.assign(new ToDoList(), JSON.parse(localStorage.getItem("toDo")))
 
-        toDO.setLists(toDO.getLists().map((list) => Object.assign(new List(), list)))
+        toDo.setLists(toDo.getLists().map((list) => Object.assign(new List(), list)))
 
-        toDO.getLists().forEach((list) => list.setTasks(list.getTasks().map((task) => Object.assign(new Task(), task))))
+        toDo.getLists().forEach((list) => list.setTasks(list.getTasks().map((task) => Object.assign(new Task(), task))))
 
-        return toDO
+        return toDo
     }
+
+    addList(list) {
+        const toDo = Storage.getToDo()
+        toDo.addList(list)
+        Storage.saveToDo(toDo)
+    }
+
+    deleteList(listName) {
+        const toDo = Storage.getToDo()
+        toDo.deleteList(listName)
+        Storage.saveToDo(toDo)
+    }
+
 }

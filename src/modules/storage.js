@@ -64,4 +64,22 @@ export default class Storage {
         toDo.getList(listName).getTask(taskName).setPriority(newTaskPriority)
         Storage.saveToDo(toDo)
     }
+
+    updateAllTasksList() {
+        const toDo = Storage.getToDo()
+        toDo.addToAllTaskList()
+        Storage.saveToDo(toDo)
+    }
+
+    updateTodayList() {
+        const toDo = Storage.getToDo()
+        toDo.addToTodayList()
+        Storage.saveToDo(toDo)
+    }
+
+    updateThisWeekList() {
+        const toDo = Storage.getToDo()
+        toDo.addToThisWeekList()
+        Storage.saveToDo(toDo)
+    }
 }

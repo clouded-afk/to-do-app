@@ -462,7 +462,7 @@ function saveEditedTask() {
     const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
     today.setHours(0,0,0,0)
 
-    if ((editedName === selectedTask.getName() || !currentList.contains(editedName)) && editedDescription !== "" && updatedDateSelection >= today) {
+    if (editedName !== "" && (editedName === selectedTask.getName() || !currentList.contains(editedName)) && editedDescription !== "" && updatedDateSelection >= today) {
         selectedTask.setName(editedName)
         selectedTask.setDescription(editedDescription)
         selectedTask.setDueDate(editedDueDate)
@@ -470,57 +470,57 @@ function saveEditedTask() {
 
         editTaskDialog.style.display = "none"
         renderTaskEdits()
+
+        // For All Tasks List
+        const allTaskList = toDo.getList("All Tasks")
+        const selectedAllTask = allTaskList.getTask(`${currentTask} (${currentList.getName()})`)
+
+        selectedAllTask.setName(`${editedName} (${currentList.getName()})`)
+        selectedAllTask.setDescription(editedDescription)
+        selectedAllTask.setDueDate(editedDueDate)
+        selectedAllTask.setPriority(editedPriority)
+
+        // For Today List
+        const todayList = toDo.getList("Today")
+        const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
+        
+        if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
+            if (editedDueDate !== today) {
+                removeTask("Today", `${currentTask} (${currentList.getName()})`)
+            } else {
+                selectedTodayTask.setName(`${editedName} (${currentList.getName()})`)
+                selectedTodayTask.setDescription(editedDescription)
+                selectedTodayTask.setDueDate(editedDueDate)
+                selectedTodayTask.setPriority(editedPriority)
+            }
+        } else {
+            toDo.addToTodayList()
+        }
+
+        // For This Week List
+        const thisWeekList = toDo.getList("This Week")
+        const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList.getName()})`)
+
+        const editedDate = new Date(editedDueDate)
+        const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()))
+        const endOfWeek = new Date(today.setDate(startOfWeek.getDate() + 6))
+
+        if (editedDate >= startOfWeek && editedDate <= endOfWeek) {
+            if (selectedThisWeekTask) {
+                selectedThisWeekTask.setName(`${editedName} (${currentList.getName()})`)
+                selectedThisWeekTask.setDescription(editedDescription)
+                selectedThisWeekTask.setDueDate(editedDueDate)
+                selectedThisWeekTask.setPriority(editedPriority)
+            } else {
+                toDo.addToThisWeekList()
+            }
+        } else {
+            if (selectedThisWeekTask) {
+                removeTask("This Week", `${currentTask} (${currentList.getName()})`)
+            }
+        }
     } else {
         validateEditTaskForm()
-    }
-
-    // For All Tasks List
-    const allTaskList = toDo.getList("All Tasks")
-    const selectedAllTask = allTaskList.getTask(`${currentTask} (${currentList.getName()})`)
-
-    selectedAllTask.setName(`${editedName} (${currentList.getName()})`)
-    selectedAllTask.setDescription(editedDescription)
-    selectedAllTask.setDueDate(editedDueDate)
-    selectedAllTask.setPriority(editedPriority)
-
-    // For Today List
-    const todayList = toDo.getList("Today")
-    const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
-    
-    if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
-        if (editedDueDate !== today) {
-            removeTask("Today", `${currentTask} (${currentList.getName()})`)
-        } else {
-            selectedTodayTask.setName(`${editedName} (${currentList.getName()})`)
-            selectedTodayTask.setDescription(editedDescription)
-            selectedTodayTask.setDueDate(editedDueDate)
-            selectedTodayTask.setPriority(editedPriority)
-        }
-    } else {
-        toDo.addToTodayList()
-    }
-
-    // For This Week List
-    const thisWeekList = toDo.getList("This Week")
-    const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList.getName()})`)
-
-    const editedDate = new Date(editedDueDate)
-    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()))
-    const endOfWeek = new Date(today.setDate(startOfWeek.getDate() + 6))
-
-    if (editedDate >= startOfWeek && editedDate <= endOfWeek) {
-        if (selectedThisWeekTask) {
-            selectedThisWeekTask.setName(`${editedName} (${currentList.getName()})`)
-            selectedThisWeekTask.setDescription(editedDescription)
-            selectedThisWeekTask.setDueDate(editedDueDate)
-            selectedThisWeekTask.setPriority(editedPriority)
-        } else {
-            toDo.addToThisWeekList()
-        }
-    } else {
-        if (selectedThisWeekTask) {
-            removeTask("This Week", `${currentTask} (${currentList.getName()})`)
-        }
     }
 }
 

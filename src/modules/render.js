@@ -66,7 +66,6 @@ function addEventHandlers() {
     const editTaskClose = document.querySelector(".close-edit-task")
 
     editTaskSave.addEventListener("click", () => {
-        editTaskDialog.style.display = "none"
         buttonDisabler(false)
         saveEditedTask()
         console.log(toDo.getLists())
@@ -293,6 +292,7 @@ function validateTaskForm() {
         const selectedDate = new Date(taskDate.value)
         const today = new Date()
         const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
+        today.setHours(0,0,0,0)
 
         if (!taskDate.value) {
             taskDate.style.border = "2px solid red"
@@ -348,6 +348,7 @@ function addNewTask() {
     const selectedDate = new Date(taskDueDate.value)
     const today = new Date()
     const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
+    today.setHours(0,0,0,0)
     
     if (taskName.value !== "" && !currentList.contains(taskName.value) && taskDescription.value !== "" && taskDueDate.value && updatedDateSelection >= today) {
         currentList.addTask(newTask)
@@ -421,6 +422,26 @@ function validateEditTaskForm() {
 
     const editedDueDate = document.getElementById("edit-due-date")
     const editedDateError = document.querySelector(".edit-date-error")
+
+    editedDueDate.addEventListener("input", function() {
+        const selectedDate = new Date(editedDueDate.value)
+        const today = new Date()
+        const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
+        today.setHours(0,0,0,0)
+
+        if (!editedDueDate.value) {
+            editedDueDate.style.border = "2px solid red"
+            editedDateError.textContent = "You Must Select A Date"
+            editedDateError.style.display = "block"
+        } else if (updatedDateSelection < today) {
+            editedDueDate.style.border = "2px solid red"
+            editedDateError.textContent = "You Must Select A Valid Date"
+            editedDateError.style.display = "block"
+        } else {
+            editedDueDate.style.border = ""
+            editedDateError.style.display = "none"
+        }
+    })
 }
 
 // Saves task after Edits
@@ -436,7 +457,12 @@ function saveEditedTask() {
 
     const editTaskDialog = document.querySelector(".edit-task-dialog")
 
-    if (editedName !== "" && !currentList.contains(editedName)) {
+    const selectedDate = new Date(editedDueDate)
+    const today = new Date()
+    const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
+    today.setHours(0,0,0,0)
+
+    if (editedName !== "" && !currentList.contains(editedName) && editedName !== selectedTask.getName() && editedDescription !== "" && updatedDateSelection >= today) {
         selectedTask.setName(editedName)
         selectedTask.setDescription(editedDescription)
         selectedTask.setDueDate(editedDueDate)

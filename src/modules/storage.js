@@ -29,4 +29,15 @@ export default class Storage {
         Storage.saveToDo(toDo)
     }
 
+    addTask(listName, task) {
+        const toDo = Storage.getToDo()
+        toDo.getList(listName).addTask(task)
+        Storage.saveToDo(toDo)
+    }
+
+    deleteTask(listName, taskName) {
+        const toDo = Storage.getToDo()
+        toDo.getList(listName).deleteTask(taskName)
+        Storage.saveToDo(toDo)
+    }
 }

@@ -462,7 +462,7 @@ function saveEditedTask() {
     const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
     today.setHours(0,0,0,0)
 
-    if (editedName !== "" && !currentList.contains(editedName) && editedName !== selectedTask.getName() && editedDescription !== "" && updatedDateSelection >= today) {
+    if ((editedName === selectedTask.getName() || !currentList.contains(editedName)) && editedDescription !== "" && updatedDateSelection >= today) {
         selectedTask.setName(editedName)
         selectedTask.setDescription(editedDescription)
         selectedTask.setDueDate(editedDueDate)
@@ -486,10 +486,9 @@ function saveEditedTask() {
     // For Today List
     const todayList = toDo.getList("Today")
     const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
-    const todaysDate = new Date()
     
     if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
-        if (editedDueDate !== todaysDate) {
+        if (editedDueDate !== today) {
             removeTask("Today", `${currentTask} (${currentList.getName()})`)
         } else {
             selectedTodayTask.setName(`${editedName} (${currentList.getName()})`)
@@ -506,8 +505,8 @@ function saveEditedTask() {
     const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList.getName()})`)
 
     const editedDate = new Date(editedDueDate)
-    const startOfWeek = new Date(todaysDate.setDate(todaysDate.getDate() - todaysDate.getDay()))
-    const endOfWeek = new Date(todaysDate.setDate(startOfWeek.getDate() + 6))
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()))
+    const endOfWeek = new Date(today.setDate(startOfWeek.getDate() + 6))
 
     if (editedDate >= startOfWeek && editedDate <= endOfWeek) {
         if (selectedThisWeekTask) {

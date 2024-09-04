@@ -1,6 +1,7 @@
 import ToDoList from "./todolist";
 import List from "./list";
 import Task from "./task";
+import Storage from "./storage";
 
 const toDo = new ToDoList();
 let currentTask;
@@ -188,6 +189,8 @@ function addNewList() {
         listElement.appendChild(delButton)
         myListSection.appendChild(listElement)
         listDialog.style.display = "none"
+
+        Storage.addList(new List(listName.value))
     } else {
         validateListForm()
     }
@@ -220,7 +223,6 @@ function addNewList() {
     });
 }
 
-
 // Removes list from lists array in toDo object
 function removeList(listName) {
     const deletedList = toDo.getList(listName)
@@ -245,6 +247,7 @@ function removeList(listName) {
     })
 
     toDo.deleteList(listName)
+    Storage.deleteList(listName)
 }
 
 function validateTaskForm() {

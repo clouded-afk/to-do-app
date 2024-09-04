@@ -3,7 +3,7 @@ import List from "./list";
 import Task from "./task";
 import Storage from "./storage";
 
-const toDo = new ToDoList();
+const toDo = Storage.getToDo();
 let currentTask;
 
 function addEventHandlers() {
@@ -130,7 +130,7 @@ function buttonDisabler(disable) {
 }
 
 function loadStoredLists() {
-    Storage.getToDo().getLists().forEach((list) => {
+    toDo.getLists().forEach((list) => {
         if (list.name !== "All Tasks" && list.name !== "Today" && list.name !== "This Week") {
             renderStoredLists(list.name)
         }
@@ -194,7 +194,6 @@ function removeList(listName) {
         }
     })
 
-    toDo.deleteList(listName)
     Storage.deleteList(listName)
 }
 
@@ -240,7 +239,7 @@ function renderStoredLists(listName) {
         newTaskButton.style.display = "none"
         contentLine.style.display = "none"
         taskContent.innerHTML = ""
-        removeList(delButton.previousElementSibling.textContent)
+        removeList(listButton.textContent)
     });
 }
 
@@ -265,13 +264,11 @@ function addNewList() {
 
     // Validates list name so it is not empty and is unique, adds the new task if all conditions are satisfied in the validation function
     if (listName.value !== "" && !existingLists.includes(toDo.getList(listName.value))) {
-        toDo.addList(new List(listName.value))
+        Storage.addList(new List(listName.value))
         listElement.appendChild(listButton)
         listElement.appendChild(delButton)
         myListSection.appendChild(listElement)
         listDialog.style.display = "none"
-
-        Storage.addList(new List(listName.value))
     } else {
         validateListForm()
     }
@@ -779,6 +776,12 @@ function initialLoad() {
     validateTaskForm()
     validateEditTaskForm()
     loadStoredLists()
+
+    window.onload = function() {
+        if (!localStorage.getItem("toDo")) {
+            Storage.saveToDo(new ToDoList())
+        }
+    }
 }
 
 export {

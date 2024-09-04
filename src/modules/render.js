@@ -129,6 +129,14 @@ function buttonDisabler(disable) {
     })
 }
 
+function loadStoredLists() {
+    Storage.getToDo().getLists().forEach((list) => {
+        if (list.name !== "All Tasks" && list.name !== "Today" && list.name !== "This Week") {
+            renderStoredLists(list.name)
+        }
+    })
+}
+
 // Validates list name so it is not empty and is unqiue
 function validateListForm() {
     const listName = document.getElementById("list-name-input")
@@ -161,6 +169,79 @@ function validateListForm() {
             errorMessage.style.display = "flex"
         }
     })
+}
+
+// Removes list from lists array in toDo object
+function removeList(listName) {
+    const deletedList = toDo.getList(listName)
+    const listTasks = deletedList.getTasks()
+
+    listTasks.forEach((task) => {
+        const allTaskList = toDo.getList("All Tasks")
+        const todayList = toDo.getList("Today")
+        const thisWeekList = toDo.getList("This Week")
+
+        if (allTaskList.contains(`${task.getName()} (${listName})`)) {
+            removeTask("All Tasks", `${task.getName()} (${listName})`)
+        }
+
+        if (todayList.contains(`${task.getName()} (${listName})`)) {
+            removeTask("Today", `${task.getName()} (${listName})`)
+        }
+
+        if (thisWeekList.contains(`${task.getName()} (${listName})`)) {
+            removeTask("This Week", `${task.getName()} (${listName})`)
+        }
+    })
+
+    toDo.deleteList(listName)
+    Storage.deleteList(listName)
+}
+
+function renderStoredLists(listName) {
+    const myListSection = document.querySelector(".my-lists")
+    const inputListName = listName
+
+    const listElement = document.createElement("li")
+    listElement.classList.add("my-lists-selector")
+
+    const listButton = document.createElement("button")
+    listButton.classList.add("my-list-button")
+    listButton.textContent = inputListName
+
+    const delButton = document.createElement("button")
+    delButton.classList.add("list-delete")
+    delButton.innerHTML += `<i class="fa-solid fa-trash-can"></i>`
+
+    listElement.appendChild(listButton)
+    listElement.appendChild(delButton)
+    myListSection.appendChild(listElement)
+
+    const headerText = document.querySelector(".content-header-text")
+    const myListButton = document.querySelectorAll(".my-list-button")
+    const newTaskButton = document.querySelector(".new-task-button")
+    const contentLine = document.querySelector(".line-div-content")
+    
+    myListButton.forEach((button) => {
+        button.addEventListener("click", () => {
+            headerText.textContent = button.textContent
+            newTaskButton.style.display = "block"
+            contentLine.style.display = "block"
+            removeActiveClass()
+            button.classList.add("active")
+        })
+    })
+
+    // Removes list from toDo object, and the element from the dom
+    const taskContent = document.querySelector(".content")
+    delButton.addEventListener("click", () => {
+        listElement.remove();
+        headerText.textContent = ""
+        newTaskButton.style.display = "none"
+        contentLine.style.display = "none"
+        taskContent.innerHTML = ""
+        removeList(delButton.previousElementSibling.textContent)
+    });
 }
 
 // adds list button to the page and pushes that list into the lists array of the ToDoList object
@@ -221,33 +302,6 @@ function addNewList() {
         taskContent.innerHTML = ""
         removeList(listButton.textContent)
     });
-}
-
-// Removes list from lists array in toDo object
-function removeList(listName) {
-    const deletedList = toDo.getList(listName)
-    const listTasks = deletedList.getTasks()
-
-    listTasks.forEach((task) => {
-        const allTaskList = toDo.getList("All Tasks")
-        const todayList = toDo.getList("Today")
-        const thisWeekList = toDo.getList("This Week")
-
-        if (allTaskList.contains(`${task.getName()} (${listName})`)) {
-            removeTask("All Tasks", `${task.getName()} (${listName})`)
-        }
-
-        if (todayList.contains(`${task.getName()} (${listName})`)) {
-            removeTask("Today", `${task.getName()} (${listName})`)
-        }
-
-        if (thisWeekList.contains(`${task.getName()} (${listName})`)) {
-            removeTask("This Week", `${task.getName()} (${listName})`)
-        }
-    })
-
-    toDo.deleteList(listName)
-    Storage.deleteList(listName)
 }
 
 function validateTaskForm() {
@@ -724,6 +778,7 @@ function initialLoad() {
     validateListForm()
     validateTaskForm()
     validateEditTaskForm()
+    loadStoredLists()
 }
 
 export {

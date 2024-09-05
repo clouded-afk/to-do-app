@@ -598,7 +598,7 @@ function renderTasksForMyTasks() {
     const headerText = document.querySelector(".content-header-text")
     const taskContent = document.querySelector(".content")
 
-    const selectedList = toDo.getList(headerText.textContent)
+    const selectedList = Storage.getToDo().getList(headerText.textContent)
     const tasks = selectedList.getTasks()
 
     taskContent.innerHTML = ""
@@ -777,6 +777,7 @@ function initialLoad() {
     validateTaskForm()
     validateEditTaskForm()
     loadStoredLists()
+    renderTasksForMyTasks()
 
     window.onload = function() {
         if (!localStorage.getItem("toDo")) {

@@ -180,9 +180,9 @@ function removeList(listName) {
     const listTasks = deletedList.getTasks()
 
     listTasks.forEach((task) => {
-        const allTaskList = toDo.getList("All Tasks")
-        const todayList = toDo.getList("Today")
-        const thisWeekList = toDo.getList("This Week")
+        const allTaskList = Storage.getToDo().getList("All Tasks")
+        const todayList = Storage.getToDo().getList("Today")
+        const thisWeekList = Storage.getToDo().getList("This Week")
 
         if (allTaskList.contains(`${task.getName()} (${listName})`)) {
             removeTask("All Tasks", `${task.getName()} (${listName})`)
@@ -674,8 +674,8 @@ function renderTasks() {
         const deleteTaskButton = taskContainer.querySelector(".remove-task");
 
         deleteTaskButton.addEventListener("click", () => {
-            removeTask(headerText.textContent, selectedTask)
-            removeTask("All Tasks", selectedTask)
+            removeTask(headerText.textContent, taskName)
+            removeTask("All Tasks", taskName)
             taskContainer.remove()
         })
 
@@ -710,19 +710,15 @@ function renderTasks() {
 
 // Removes task from the selected list
 function removeTask(listName, taskName) {
-    const selectedList = toDo.getList(listName)
-    selectedList.deleteTask(taskName)
+    Storage.deleteTask(listName, taskName)
 
-    const allTaskList = toDo.getList("All Tasks")
-    allTaskList.deleteTask(`${taskName} (${listName})`)
+    Storage.deleteTask("All Tasks", `${taskName} (${listName})`)
 
-    const todayList = toDo.getList("Today")
-    todayList.deleteTask(`${taskName} (${listName})`)
+    Storage.deleteTask("Today", `${taskName} (${listName})`)
 
-    const thisWeekList = toDo.getList("This Week")
-    thisWeekList.deleteTask(`${taskName} (${listName})`)
+    Storage.deleteTask("This Week", `${taskName} (${listName})`)
 
-    console.log(toDo.getLists())
+    console.log(Storage.getToDo().getLists())
 }
 
 function clearListForm() {

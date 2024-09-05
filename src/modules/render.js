@@ -173,7 +173,7 @@ function validateListForm() {
 
 // Removes list from lists array in toDo object
 function removeList(listName) {
-    const deletedList = toDo.getList(listName)
+    const deletedList = Storage.getToDo().getList(listName)
     const listTasks = deletedList.getTasks()
 
     listTasks.forEach((task) => {
@@ -645,7 +645,8 @@ function renderTasks() {
     const taskContent = document.querySelector(".content")
     const headerText = document.querySelector(".content-header-text")
 
-    const currentList =  toDo.getList(headerText.textContent)
+    const currentList =  Storage.getToDo().getList(headerText.textContent)
+    console.log(currentList)
     const currentTasks = currentList.getTasks()
 
     taskContent.innerHTML = ""

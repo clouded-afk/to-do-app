@@ -312,7 +312,7 @@ function validateTaskForm() {
     const nameError = document.querySelector(".task-name-error")
 
     taskName.addEventListener("input", function() {
-        const currentList = toDo.getList(headerText.textContent)
+        const currentList = Storage.getToDo().getList(headerText.textContent)
         const trimmedName = taskName.value.trim()
         if (trimmedName === "") {
             taskName.style.border = "2px solid red"
@@ -400,7 +400,7 @@ function addNewTask() {
     const newTask = new Task(taskName.value, taskDescription.value, taskDueDate.value, taskPriority.value)
 
     const headerText = document.querySelector(".content-header-text")
-    const currentList = toDo.getList(headerText.textContent)
+    const currentList = Storage.getToDo().getList(headerText.textContent)
     const taskDialog = document.querySelector(".task-dialog")
 
     const selectedDate = new Date(taskDueDate.value)
@@ -409,10 +409,10 @@ function addNewTask() {
     today.setHours(0,0,0,0)
     
     if (taskName.value !== "" && !currentList.contains(taskName.value) && taskDescription.value !== "" && taskDueDate.value && updatedDateSelection >= today) {
-        currentList.addTask(newTask)
-        toDo.addToAllTaskList()
-        toDo.addToTodayList()
-        toDo.addToThisWeekList()
+        Storage.addTask(headerText.textContent, newTask)
+        Storage.updateAllTasksList()
+        Storage.updateThisWeekList()
+        Storage.updateTodayList()
         renderTasks()
         taskDialog.style.display = "none"
     } else {

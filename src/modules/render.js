@@ -232,6 +232,7 @@ function renderStoredLists(listName) {
             contentLine.style.display = "block"
             removeActiveClass()
             button.classList.add("active")
+            renderTasks()
         })
     })
 

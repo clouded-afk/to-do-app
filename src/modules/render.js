@@ -140,12 +140,11 @@ function loadStoredLists() {
 // Validates list name so it is not empty and is unqiue
 function validateListForm() {
     const listName = document.getElementById("list-name-input")
-    const existingLists = toDo.getLists()
     const errorMessage = document.querySelector(".list-name-error")
 
     listName.addEventListener("input", function() {
         const trimmedValue = listName.value.trim()
-        if (existingLists.includes(toDo.getList(trimmedValue))) {
+        if (Storage.getToDo().getList(trimmedValue)) {
             listName.style.border = "2px solid red"
             errorMessage.textContent = "Name Must Be Unique"
             errorMessage.style.display = "flex"
@@ -166,6 +165,10 @@ function validateListForm() {
         if (trimmedValue === "") {
             listName.style.border = "2px solid red"
             errorMessage.textContent = "Name Must Not Be Empty"
+            errorMessage.style.display = "flex"
+        } else if (Storage.getToDo().getList(trimmedValue)){
+            listName.style.border = "2px solid red"
+            errorMessage.textContent = "Name Must Be Unique"
             errorMessage.style.display = "flex"
         }
     })
@@ -195,6 +198,7 @@ function removeList(listName) {
     })
 
     Storage.deleteList(listName)
+    console.log(Storage.getToDo().getLists())
 }
 
 function renderStoredLists(listName) {
@@ -263,7 +267,7 @@ function addNewList() {
     const listDialog = document.querySelector(".list-dialog")
 
     // Validates list name so it is not empty and is unique, adds the new task if all conditions are satisfied in the validation function
-    if (listName.value !== "" && !existingLists.includes(toDo.getList(listName.value))) {
+    if (listName.value !== "" && !Storage.getToDo().getList(listName.value)) {
         Storage.addList(new List(listName.value))
         listElement.appendChild(listButton)
         listElement.appendChild(delButton)

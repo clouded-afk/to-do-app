@@ -507,14 +507,11 @@ function validateEditTaskForm() {
 function saveEditedTask() {
     // For User Created Lists
     const currentList = Storage.getToDo().getList(document.querySelector(".content-header-text").textContent).getName()
-    console.log(currentList)
 
     const editedName = document.getElementById("edit-task-name").value 
     const editedDescription = document.getElementById("edit-description").value
     const editedDueDate = document.getElementById("edit-due-date").value
     const editedPriority = document.getElementById("edit-priority").value
-
-    console.log(editedDescription)
 
     const editTaskDialog = document.querySelector(".edit-task-dialog")
 
@@ -522,6 +519,8 @@ function saveEditedTask() {
     const today = new Date()
     const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
     today.setHours(0,0,0,0)
+    selectedDate.setHours(0,0,0,0)
+
 
     if (editedName !== "" && (editedName === currentTask || !Storage.getToDo().getList(currentList).contains(editedName)) && editedDescription !== "" && updatedDateSelection >= today) {
         Storage.editDescription(currentList, currentTask, editedDescription)
@@ -534,7 +533,6 @@ function saveEditedTask() {
         renderTaskEdits()
 
         // For All Tasks List
-
         Storage.editDescription("All Tasks", `${currentTask} (${currentList})`, editedDescription)
         Storage.editDueDate("All Tasks", `${currentTask} (${currentList})`, editedDueDate)
         Storage.editPriority("All Tasks", `${currentTask} (${currentList})`, editedPriority)
@@ -544,7 +542,7 @@ function saveEditedTask() {
         const todayList = Storage.getToDo().getList("Today")
         
         if (todayList.contains(`${currentTask} (${currentList})`)) {
-            if (editedDueDate !== today) {
+            if (selectedDate.getTime() !== today.getTime()) {
                 removeTask("Today", `${currentTask} (${currentList})`)
             } else {
                 Storage.editDescription("Today", `${currentTask} (${currentList})`, editedDescription)
@@ -552,7 +550,7 @@ function saveEditedTask() {
                 Storage.editPriority("Today", `${currentTask} (${currentList})`, editedPriority)
                 Storage.renameTask("Today", `${currentTask} (${currentList})`, `${editedName} (${currentList})`)
             }
-        } else if (editedDueDate === today){
+        } else if (!todayList.contains(`${currentTask} (${currentList})`) && selectedDate.getTime() === today.getTime()){
             Storage.addTask("Today", new Task(`${currentTask} (${currentList})`, editedDescription, editedDueDate, editedPriority))
         }   
 
@@ -560,11 +558,10 @@ function saveEditedTask() {
         const thisWeekList = Storage.getToDo().getList("This Week")
         const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList})`)
 
-        const editedDate = new Date(editedDueDate)
         const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()))
         const endOfWeek = new Date(today.setDate(startOfWeek.getDate() + 6))
 
-        if (editedDate >= startOfWeek && editedDate <= endOfWeek) {
+        if (selectedDate >= startOfWeek && selectedDate <= endOfWeek) {
             if (thisWeekList.contains(`${currentTask} (${currentList})`)) {
                 Storage.editDescription("This Week", `${currentTask} (${currentList})`, editedDescription)
                 Storage.editDueDate("This Week", `${currentTask} (${currentList})`, editedDueDate)

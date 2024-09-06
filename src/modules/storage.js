@@ -3,81 +3,81 @@ import List from "./list"
 import ToDoList from "./todolist"
 
 export default class Storage {
-    saveToDo(data) {
+    static saveToDo(data) {
         localStorage.setItem("toDo", JSON.stringify(data))
     }
 
-    getToDo() {
+    static getToDo() {
+        
         const toDo = Object.assign(new ToDoList(), JSON.parse(localStorage.getItem("toDo")))
+        toDo.setLists(toDo.getLists().map(list => Object.assign(new List(), list)))
 
-        toDo.setLists(toDo.getLists().map((list) => Object.assign(new List(), list)))
-
-        toDo.getLists().forEach((list) => list.setTasks(list.getTasks().map((task) => Object.assign(new Task(), task))))
+        toDo.getLists().forEach(list => list.setTasks(list.getTasks().map(task => Object.assign(new Task(), task))))
 
         return toDo
     }
 
-    addList(list) {
+    static addList(list) {
         const toDo = Storage.getToDo()
         toDo.addList(list)
         Storage.saveToDo(toDo)
     }
 
-    deleteList(listName) {
+    static deleteList(listName) {
         const toDo = Storage.getToDo()
         toDo.deleteList(listName)
         Storage.saveToDo(toDo)
     }
 
-    addTask(listName, task) {
+    static addTask(listName, task) {
         const toDo = Storage.getToDo()
         toDo.getList(listName).addTask(task)
         Storage.saveToDo(toDo)
     }
 
-    deleteTask(listName, taskName) {
+    static deleteTask(listName, taskName) {
         const toDo = Storage.getToDo()
         toDo.getList(listName).deleteTask(taskName)
         Storage.saveToDo(toDo)
     }
 
-    renameTask(listName, taskName, newTaskName) {
+    static renameTask(listName, taskName, newTaskName) {
         const toDo = Storage.getToDo()
         toDo.getList(listName).getTask(taskName).setName(newTaskName)
-        Storage.saveToDo()
+        Storage.saveToDo(toDo)
     }
 
-    changeDescription(listName, taskName, newDescription) {
+    static editDescription(listName, taskName, newDescription) {
         const toDo = Storage.getToDo()
         toDo.getList(listName).getTask(taskName).setDescription(newDescription)
         Storage.saveToDo(toDo)
     }
 
-    changeDueDate(listName, taskName, newDueDate) {
+    static editDueDate(listName, taskName, newDueDate) {
         const toDo = Storage.getToDo()
         toDo.getList(listName).getTask(taskName).setDueDate(newDueDate)
         Storage.saveToDo(toDo)
     }
 
-    changePriority(listName, taskName, newTaskPriority) {
+    static editPriority(listName, taskName, newTaskPriority) {
         const toDo = Storage.getToDo()
         toDo.getList(listName).getTask(taskName).setPriority(newTaskPriority)
         Storage.saveToDo(toDo)
     }
 
-    updateAllTasksList() {
+    static updateAllTasksList() {
         const toDo = Storage.getToDo()
         toDo.addToAllTaskList()
         Storage.saveToDo(toDo)
     }
 
-    updateTodayList() {
+    static updateTodayList() {
         const toDo = Storage.getToDo()
         toDo.addToTodayList()
         Storage.saveToDo(toDo)
     }
 
-    updateThisWeekList() {
+    static updateThisWeekList() {
         const toDo = Storage.getToDo()
         toDo.addToThisWeekList()
         Storage.saveToDo(toDo)

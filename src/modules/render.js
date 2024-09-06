@@ -445,9 +445,9 @@ function validateEditTaskForm() {
     const editedNameError = document.querySelector(".edit-name-error")
 
     editedName.addEventListener("input", function() {
-        const currentList = toDo.getList(headerText.textContent)
+        const currentList = Storage.getToDo().getList(headerText.textContent)
         const trimmedEditedName = editedName.value.trim()
-        const currentTaskName = currentList.getTask(currentTask).getName()
+        const currentTaskName = currentTask
 
         if (trimmedEditedName === "") {
             editedName.style.border = "2px solid red"
@@ -455,7 +455,7 @@ function validateEditTaskForm() {
             editedNameError.style.display = "block"
         } else if (currentList.contains(trimmedEditedName) && trimmedEditedName !== currentTaskName) {
             editedName.style.border = "2px solid red"
-            editedNameError.textContent = "Name Must Be Unique"
+            editedNameError.textContent = "Name Must Be Unique Within This List"
             editedNameError.style.display = "block"
         } else {
             editedName.style.border = ""
@@ -508,13 +508,13 @@ function saveEditedTask() {
     // For User Created Lists
     const currentList = Storage.getToDo().getList(document.querySelector(".content-header-text").textContent).getName()
     console.log(currentList)
-    console.log(currentTask)
-    const selectedTask = Storage.getToDo().getList(document.querySelector(".content-header-text").textConten).getTask(currentTask).getName()
-    console.log(selectedTask)
+
     const editedName = document.getElementById("edit-task-name").value 
     const editedDescription = document.getElementById("edit-description").value
     const editedDueDate = document.getElementById("edit-due-date").value
     const editedPriority = document.getElementById("edit-priority").value
+
+    console.log(editedDescription)
 
     const editTaskDialog = document.querySelector(".edit-task-dialog")
 
@@ -523,61 +523,59 @@ function saveEditedTask() {
     const updatedDateSelection = selectedDate.setDate(selectedDate.getDate() + 1)
     today.setHours(0,0,0,0)
 
-    if (editedName !== "" && (editedName === selectedTask.getName() || !currentList.contains(editedName)) && editedDescription !== "" && updatedDateSelection >= today) {
-        Storage.renameTask(currentList, selectedTask.getName(), editedName)
-        Storage.editDescription(currentList, selectedTask, editedDescription)
-        Storage.editDueDate(currentList, selectedTask, editedDate)
-        Storage.editPriority(currentList, selectedTask, editedPriority)
+    if (editedName !== "" && (editedName === currentTask || !Storage.getToDo().getList(currentList).contains(editedName)) && editedDescription !== "" && updatedDateSelection >= today) {
+        Storage.editDescription(currentList, currentTask, editedDescription)
+        Storage.editDueDate(currentList, currentTask, editedDueDate)
+        Storage.editPriority(currentList, currentTask, editedPriority)
+        Storage.renameTask(currentList, currentTask, editedName)
+
 
         editTaskDialog.style.display = "none"
         renderTaskEdits()
 
         // For All Tasks List
-        const allTaskList = toDo.getList("All Tasks")
-        const selectedAllTask = allTaskList.getTask(`${currentTask} (${currentList.getName()})`)
 
-        selectedAllTask.setName(`${editedName} (${currentList.getName()})`)
-        selectedAllTask.setDescription(editedDescription)
-        selectedAllTask.setDueDate(editedDueDate)
-        selectedAllTask.setPriority(editedPriority)
+        Storage.editDescription("All Tasks", `${currentTask} (${currentList})`, editedDescription)
+        Storage.editDueDate("All Tasks", `${currentTask} (${currentList})`, editedDueDate)
+        Storage.editPriority("All Tasks", `${currentTask} (${currentList})`, editedPriority)
+        Storage.renameTask("All Tasks", `${currentTask} (${currentList})`, `${editedName} (${currentList})`)
 
         // For Today List
-        const todayList = toDo.getList("Today")
-        const selectedTodayTask = todayList.getTask(`${currentTask} (${currentList.getName()})`)
+        const todayList = Storage.getToDo().getList("Today")
         
-        if (todayList.contains(`${currentTask} (${currentList.getName()})`)) {
+        if (todayList.contains(`${currentTask} (${currentList})`)) {
             if (editedDueDate !== today) {
-                removeTask("Today", `${currentTask} (${currentList.getName()})`)
+                removeTask("Today", `${currentTask} (${currentList})`)
             } else {
-                selectedTodayTask.setName(`${editedName} (${currentList.getName()})`)
-                selectedTodayTask.setDescription(editedDescription)
-                selectedTodayTask.setDueDate(editedDueDate)
-                selectedTodayTask.setPriority(editedPriority)
+                Storage.editDescription("Today", `${currentTask} (${currentList})`, editedDescription)
+                Storage.editDueDate("Today", `${currentTask} (${currentList})`, editedDueDate)
+                Storage.editPriority("Today", `${currentTask} (${currentList})`, editedPriority)
+                Storage.renameTask("Today", `${currentTask} (${currentList})`, `${editedName} (${currentList})`)
             }
-        } else {
-            toDo.addToTodayList()
-        }
+        } else if (editedDueDate === today){
+            Storage.addTask("Today", new Task(`${currentTask} (${currentList})`, editedDescription, editedDueDate, editedPriority))
+        }   
 
         // For This Week List
-        const thisWeekList = toDo.getList("This Week")
-        const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList.getName()})`)
+        const thisWeekList = Storage.getToDo().getList("This Week")
+        const selectedThisWeekTask = thisWeekList.getTask(`${currentTask} (${currentList})`)
 
         const editedDate = new Date(editedDueDate)
         const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()))
         const endOfWeek = new Date(today.setDate(startOfWeek.getDate() + 6))
 
         if (editedDate >= startOfWeek && editedDate <= endOfWeek) {
-            if (selectedThisWeekTask) {
-                selectedThisWeekTask.setName(`${editedName} (${currentList.getName()})`)
-                selectedThisWeekTask.setDescription(editedDescription)
-                selectedThisWeekTask.setDueDate(editedDueDate)
-                selectedThisWeekTask.setPriority(editedPriority)
+            if (thisWeekList.contains(`${currentTask} (${currentList})`)) {
+                Storage.editDescription("This Week", `${currentTask} (${currentList})`, editedDescription)
+                Storage.editDueDate("This Week", `${currentTask} (${currentList})`, editedDueDate)
+                Storage.editPriority("This Week", `${currentTask} (${currentList})`, editedPriority)
+                Storage.renameTask("This Week", `${currentTask} (${currentList})`, `${editedName} (${currentList})`)
             } else {
-                toDo.addToThisWeekList()
+                Storage.addTask("This Week", new Task(`${currentTask} (${currentList})`, editedDescription, editedDueDate, editedPriority))
             }
         } else {
             if (selectedThisWeekTask) {
-                removeTask("This Week", `${currentTask} (${currentList.getName()})`)
+                removeTask("This Week", `${currentTask} (${currentList})`)
             }
         }
     } else {

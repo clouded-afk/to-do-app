@@ -651,6 +651,8 @@ function renderTasks() {
     console.log(currentList)
     const currentTasks = currentList.getTasks()
 
+    currentTasks.sort((a, b) => new Date(a.getFormattedDate()) - new Date(b.getFormattedDate()));
+
     taskContent.innerHTML = ""
 
     currentTasks.forEach((task) => {

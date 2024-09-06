@@ -88,7 +88,7 @@ function addEventHandlers() {
             contentLine.style.display = "block"
             removeActiveClass()
             button.classList.add("active")
-            renderTasksForMyTasks()
+            renderTasksForGeneralLists()
         })
     })
 }
@@ -423,7 +423,7 @@ function addNewTask() {
 
 // Populate Edit Task form with correct data based on selected task to edit
 function populateEditTaskForm(taskName) {
-    const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
+    const currentList = Storage.getToDo().getList(document.querySelector(".content-header-text").textContent)
     const selectedTask = currentList.getTask(taskName)
 
     const editNameInput = document.getElementById("edit-task-name") 
@@ -506,9 +506,11 @@ function validateEditTaskForm() {
 // Saves task after Edits
 function saveEditedTask() {
     // For User Created Lists
-    const currentList = toDo.getList(document.querySelector(".content-header-text").textContent)
-    const selectedTask = currentList.getTask(currentTask)
-
+    const currentList = Storage.getToDo().getList(document.querySelector(".content-header-text").textContent).getName()
+    console.log(currentList)
+    console.log(currentTask)
+    const selectedTask = Storage.getToDo().getList(document.querySelector(".content-header-text").textConten).getTask(currentTask).getName()
+    console.log(selectedTask)
     const editedName = document.getElementById("edit-task-name").value 
     const editedDescription = document.getElementById("edit-description").value
     const editedDueDate = document.getElementById("edit-due-date").value
@@ -522,10 +524,10 @@ function saveEditedTask() {
     today.setHours(0,0,0,0)
 
     if (editedName !== "" && (editedName === selectedTask.getName() || !currentList.contains(editedName)) && editedDescription !== "" && updatedDateSelection >= today) {
-        selectedTask.setName(editedName)
-        selectedTask.setDescription(editedDescription)
-        selectedTask.setDueDate(editedDueDate)
-        selectedTask.setPriority(editedPriority)
+        Storage.renameTask(currentList, selectedTask.getName(), editedName)
+        Storage.editDescription(currentList, selectedTask, editedDescription)
+        Storage.editDueDate(currentList, selectedTask, editedDate)
+        Storage.editPriority(currentList, selectedTask, editedPriority)
 
         editTaskDialog.style.display = "none"
         renderTaskEdits()
@@ -595,7 +597,7 @@ function renderTaskEdits() {
 }
 
 // Displays all tasks when all tasks button is clicked
-function renderTasksForMyTasks() {
+function renderTasksForGeneralLists() {
     const headerText = document.querySelector(".content-header-text")
     const taskContent = document.querySelector(".content")
 
@@ -778,7 +780,7 @@ function initialLoad() {
     validateTaskForm()
     validateEditTaskForm()
     loadStoredLists()
-    renderTasksForMyTasks()
+    renderTasksForGeneralLists()
 
     window.onload = function() {
         if (!localStorage.getItem("toDo")) {

@@ -69,7 +69,6 @@ function addEventHandlers() {
     editTaskSave.addEventListener("click", () => {
         buttonDisabler(false)
         saveEditedTask()
-        console.log(toDo.getLists())
     })
 
     editTaskClose.addEventListener("click", () => {
@@ -198,7 +197,6 @@ function removeList(listName) {
     })
 
     Storage.deleteList(listName)
-    console.log(Storage.getToDo().getLists())
 }
 
 function renderStoredLists(listName) {
@@ -651,7 +649,6 @@ function renderTasks() {
     const headerText = document.querySelector(".content-header-text")
 
     const currentList =  Storage.getToDo().getList(headerText.textContent)
-    console.log(currentList)
     const currentTasks = currentList.getTasks()
 
     currentTasks.sort((a, b) => new Date(a.getFormattedDate()) - new Date(b.getFormattedDate()));
@@ -720,8 +717,6 @@ function removeTask(listName, taskName) {
     Storage.deleteTask("Today", `${taskName} (${listName})`)
 
     Storage.deleteTask("This Week", `${taskName} (${listName})`)
-
-    console.log(Storage.getToDo().getLists())
 }
 
 function clearListForm() {

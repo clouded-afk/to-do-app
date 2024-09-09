@@ -575,6 +575,9 @@ function saveEditedTask() {
                 removeTask("This Week", `${currentTask} (${currentList})`)
             }
         }
+
+        Storage.updateAllTasksList()
+        Storage.updateThisWeekList()
     } else {
         validateEditTaskForm()
     }

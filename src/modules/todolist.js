@@ -51,6 +51,8 @@ export default class ToDoList {
                 this.getList("All Tasks").addTask(new Task(taskName, task.getDescription(), task.getDueDate(), task.getPriority()))
             })
         })
+
+        this.getList("All Tasks").setTasks(this.getList("All Tasks").getTasks().sort((taskOne, taskTwo) => compareAsc(toDate(new Date(taskOne.getFormattedDate())), toDate(new Date(taskTwo.getFormattedDate())))))
     }
 
     addToTodayList() {

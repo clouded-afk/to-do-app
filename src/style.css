@@ -364,6 +364,14 @@ li {
     margin-bottom: 10px;
 }
 
+#list-submit:hover, #task-submit:hover, .task-save:hover {
+    background-color: #16a34a;
+}
+
+.list-close:hover, .task-close:hover, .close-edit-task:hover {
+    background-color: #fca5a5;
+}
+
 .edit-form-buttons {
     display: flex;
     align-items: center;
